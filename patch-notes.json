@@ -1,0 +1,485 @@
+[
+  {
+    "version": "v4.9.1",
+    "title": "PTT Improvements, Watch Stream & Settings Fix",
+    "date": "May 13, 2026",
+    "items": [
+      "PTT now supports mouse buttons — middle click, right click, and side buttons (Mouse 4 / Mouse 5) can be used as Push-to-Talk keys. Right-click context menu is suppressed during key capture.",
+      "PTT key capture also recognizes many more keyboard keys that previously did not register: arrow keys, numpad keys (Num0–Num9, Num+, Num-, etc.), Insert, Delete, Home, End, Page Up, Page Down, Print Screen, Scroll Lock, and Pause.",
+      "Watch Stream: clicking a user's name now shows a 'Watch Stream' option in the context menu when that user is actively sharing their screen in your voice channel. No need to wait for the notification banner.",
+      "The Watch Stream option only appears when you are in the same voice channel as the sharer and they are actively sharing.",
+      "Fixed a critical bug where settings (including PTT key, PTT mode, microphone settings, volumes, theme, and all other preferences) were not reliably saved after closing the app. Chromium's localStorage backend buffers writes lazily and can lose data on close — settings are now also written directly to disk via the main process, guaranteeing persistence."
+    ]
+  },
+  {
+    "version": "v4.9.0",
+    "title": "Linux Support + Bug Fixes",
+    "date": "May 13, 2026",
+    "items": [
+      "Linux is now officially supported — download the AppImage (portable, runs on any distro) or the .deb package for Debian/Ubuntu.",
+      "PTT on Linux uses Electron's global shortcut system. VAD (Voice Activity Detection) is fully supported on Linux and is the recommended option.",
+      "Audio ducking is Windows-only (requires WASAPI); all other features work identically on Linux.",
+      "Fixed a critical sign-out bug: signing out then back in and joining a channel would break chat. Stale reconnect timers from the closed socket were firing after the new login and disrupting the active connection.",
+      "Auto-join clan channel on login — members are automatically placed in their clan channel when they connect, and again on each reconnect.",
+      "Added /f a [user] and /f r [user] shorthand commands to add and remove friends directly from chat. Both commands now appear in /help.",
+      "Fixed /f a and /f r not working — the client was sending the wrong field name to the server API."
+    ]
+  },
+  {
+    "version": "v4.8.6",
+    "title": "Image & Video Previews — imgur, X, Reddit",
+    "date": "May 13, 2026",
+    "items": [
+      "imgur.com — videos and GIFs (gifv) now open in the player window via the ▶ button; regular images still display inline as before.",
+      "x.com / twitter.com — posts with photos or videos now show a thumbnail inline below the link; clicking ▶ opens the full tweet in a player window.",
+      "reddit.com — posts with images or videos now show a thumbnail inline; clicking ▶ opens the post in a player window. Direct Reddit video links (v.redd.it) play in the video player.",
+      "All inline image thumbnails use no-referrer policy to avoid hotlink blocks."
+    ]
+  },
+  {
+    "version": "v4.8.5",
+    "title": "Image Previews in Chat",
+    "date": "May 13, 2026",
+    "items": [
+      "Images from known hosts now display inline below the link — imgur, gyazo, snipboard, Discord CDN, Reddit (i.redd.it), Puush (puu.sh), ImgBB (i.ibb.co), PostImages (i.postimg.cc), Twitter media (pbs.twimg.com), and any direct image URL (.jpg, .png, .gif, .webp, .bmp, .svg).",
+      "Click the thumbnail to open a full-size lightbox overlay. Click anywhere on the overlay to close it.",
+      "Clicking the link still opens it in your default browser as usual.",
+      "Images that fail to load are silently removed — no broken image icons."
+    ]
+  },
+  {
+    "version": "v4.8.4",
+    "title": "Video Player Opens in New Window",
+    "date": "May 13, 2026",
+    "items": [
+      "Direct video file links (.mp4, .webm, .ogg, .mov) now open in the same dedicated player window as YouTube and Twitch — instead of the small inline player inside the chat message. The window title shows the filename."
+    ]
+  },
+  {
+    "version": "v4.8.3",
+    "title": "Embedded Video Player — BrowserWindow",
+    "date": "May 12, 2026",
+    "items": [
+      "Clicking ▶ on a video link now opens a dedicated floating player window instead of trying to embed inside chat. This fixes YouTube, Twitch, Vimeo and Streamable not loading — those platforms block iframes served from a file:// origin, but a proper BrowserWindow has no such restriction.",
+      "Direct video file links (.mp4, .webm, etc.) still play inline inside the chat message as before.",
+      "Fixed the Embedded Video Player toggle in Settings — it now takes effect immediately without needing to press Save, and instantly shows or hides all ▶ buttons already visible in the chat."
+    ]
+  },
+  {
+    "version": "v4.8.2",
+    "title": "Link & Embed Fix (proper)",
+    "date": "May 12, 2026",
+    "items": [
+      "Fixed clickable links and the ▶ embed button for real. The previous fix was incomplete — Electron 28 sandbox mode blocks inline onclick handlers in dynamically injected HTML entirely, regardless of quoting. Rewrote the feature using event delegation: links and embed buttons now carry data-* attributes (data-url, data-embed-type, data-embed-src) and a single delegated listener on the chat log handles all clicks. No inline JS in HTML at all."
+    ]
+  },
+  {
+    "version": "v4.8.1",
+    "title": "Link & Embed Hotfix",
+    "date": "May 12, 2026",
+    "items": [
+      "Fixed clickable links not responding to clicks. The root cause was that JSON.stringify produces double-quoted strings which collided with the double-quoted HTML onclick attribute, causing the browser to silently ignore the handler.",
+      "Fixed the embedded video player not appearing. The same quoting bug prevented the ▶ button from calling toggleEmbed. Additionally, using esc() on embed URLs was corrupting query strings by turning & into &amp;, breaking iframe and video src values. Both are now built via DOM APIs."
+    ]
+  },
+  {
+    "version": "v4.8.0",
+    "title": "Links, Video Embeds & Chat Polish",
+    "date": "May 12, 2026",
+    "items": [
+      "URLs in chat messages, whispers and emotes are now clickable. Clicking a link shows a confirmation popup (Are you sure you want to open this?) with a Do not ask again option.",
+      "Video links now show a ▶ button that opens an inline player directly inside the chat message — no browser required. Supported: YouTube, Twitch streams, Twitch clips, Twitch VODs, Vimeo, Streamable, and direct .mp4/.webm/.ogg/.mov file links.",
+      "Embedded Video Player can be toggled on or off in Settings → Behavior.",
+      "Clan channels are now displayed as 'Clan TAG' everywhere in the app instead of '[TAG]'. Joining via /j also accepts the friendly format: /j Clan CsB.",
+      "Clan Message of the Day now shows as [Message of the Day] instead of [Clan MOTD] when joining a clan channel or when it is updated."
+    ]
+  },
+  {
+    "version": "v4.7.0",
+    "title": "Chat Text Logging",
+    "date": "May 12, 2026",
+    "items": [
+      "Channel messages and emotes are now saved to a daily .txt file in your Elderwand logs folder (same folder as the app log). Each file is named by date — e.g. 2026-05-12.txt — and each line is prefixed with a timestamp like [20:47:12].",
+      "Whispers (sent and received) are logged to a separate file — e.g. 2026-05-12-WHISPERS.txt — keeping private conversations out of the channel log.",
+      "Encrypted whispers are decrypted before logging so your local log is always human-readable. Log files are stored only on your own machine and are never sent anywhere.",
+      "Log files are found at: %APPDATA%\\elderwand-client\\logs\\"
+    ]
+  },
+  {
+    "version": "v4.6.0",
+    "title": "End-to-End Encrypted Whispers",
+    "date": "May 12, 2026",
+    "items": [
+      "Whispers are now end-to-end encrypted. Messages are encrypted on your device before being sent and can only be read by the intended recipient — the server routes an encrypted blob and never sees the plaintext.",
+      "Encryption uses ECDH P-256 key exchange and AES-256-GCM, both built into the browser's native Web Crypto API. No extra software or setup required.",
+      "Each account gets a unique key pair generated on first login and stored locally on your device. Your private key never leaves your machine.",
+      "Encrypted whispers are marked with a 🔒 icon in chat. If a recipient hasn't logged in since this update (no key registered yet), the message falls back to plaintext with a warning."
+    ]
+  },
+  {
+    "version": "v4.5.1",
+    "title": "Screen Share Audio Hotfix",
+    "date": "May 12, 2026",
+    "items": [
+      "Fixed screen share audio muting the sharer's own speakers while sharing. The capture mode was set to 'loopbackWithMute' which silences your local audio while recording — changed to 'loopback' which captures system audio without affecting your own volume.",
+      "Fixed viewers not hearing the sharer's audio. The audio track was being silently dropped when it arrived before the video track (which is common). Both tracks are now properly combined regardless of which arrives first."
+    ]
+  },
+  {
+    "version": "v4.5.0",
+    "title": "Screen Share Audio Fix",
+    "date": "May 12, 2026",
+    "items": [
+      "Fixed screen share audio — system audio (game sound, desktop audio) now actually transmits to viewers when 'Capture System Audio' is enabled. The root cause was that the internal capture handler never requested the Windows audio loopback device, so the stream had zero audio tracks regardless of the setting.",
+      "Fixed sign-in button not staying grayed out during an available update download. Previously the button unlocked as soon as an update was found, letting users sign in before noticing the update strip. The button now stays locked until the download completes, then unlocks with a prompt to restart or sign in and update on quit."
+    ]
+  },
+  {
+    "version": "v4.4.0",
+    "title": "Voice Call Rework",
+    "date": "May 12, 2026",
+    "items": [
+      "Fixed a bug where the caller would join an undefined room on call acceptance — private calls now actually connect both participants correctly.",
+      "Outgoing calls now show a 'Calling…' overlay with the callee's name and a Cancel button, instead of just a toast notification.",
+      "Added ring tone for both caller and callee using Web Audio API. The ring plays every 2 seconds and stops automatically when the call is accepted, declined, cancelled, or ended.",
+      "Added a Cancel button for outgoing calls — the caller can now cancel before the other person picks up. The callee's incoming call notification dismisses instantly.",
+      "Added an End Call button (📵) in the voice bar. It only appears during a private call and ends the call for both participants simultaneously.",
+      "The voice bar now shows the participants' names (e.g. '📞 Alice & Bob') and 'Private Call' status text instead of the internal room ID.",
+      "If a caller disconnects while the phone is ringing, the callee's incoming call notification is now automatically dismissed.",
+      "Mute and deafen icons in the voice channel panel now update instantly when you toggle them, without needing to switch tabs."
+    ]
+  },
+  {
+    "version": "v4.3.0",
+    "title": "Screen Share Audio & Mute/Deafen Sync Fix",
+    "date": "May 12, 2026",
+    "items": [
+      "Screen share now transmits audio. Enable 'Capture System Audio' in Settings → Screen Share → Capture, then start sharing — viewers will hear your game/desktop audio live through the stream.",
+      "Added a volume slider (0–100%) in the screen share viewer window toolbar so each viewer can control the stream audio independently.",
+      "Fixed mute and deafen status not showing for other users in the voice channel. When someone mutes or deafens themselves, their name in the voice channel list now immediately shows 🔇 or 🔕 for all other users in the room.",
+      "Mute/deafen state is now persisted on the server — if you join a channel where someone is already muted, their icon shows correctly right away without waiting for them to change state."
+    ]
+  },
+  {
+    "version": "v4.2.0",
+    "title": "Native WebRTC Screen Share Viewer & FPS/Resolution Overhaul",
+    "date": "May 12, 2026",
+    "items": [
+      "Screen share viewer is now a true native WebRTC peer — the old JPEG encode → IPC relay pipeline has been completely removed. The viewer window receives the video stream directly via RTCPeerConnection, eliminating the 100–200 ms encoding lag and the 15 fps relay cap.",
+      "Fixed ICE candidate race condition that caused a black screen on the first View click: candidates arriving before the viewer window finished loading are now buffered and flushed once the offer has been delivered.",
+      "Resolution downscaling now actually works. Width/height constraints in getDisplayMedia are silently ignored by Electron's setDisplayMediaRequestHandler — the fix reads the real captured dimensions from the track and calculates a scaleResolutionDownBy factor for the WebRTC encoder. Example: 3440×1440 source with 1080p setting encodes at ~1920×805.",
+      "Screen share FPS raised from 15 to 28-30 fps. Root causes: WebRTC defaults screen-content tracks to 15 fps, Chromium's WebRtcAdaptiveScaling feature enforces this regardless of settings, and a 75% CPU cap on the encoder. Fixes: disabled WebRtcAdaptiveScaling, raised CPU cap to 100%, switched to getDisplayMedia via setDisplayMediaRequestHandler, applied applyConstraints post-capture, and call setParameters after connection is established to force maxFramerate.",
+      "contentHint changed from 'detail' to 'motion' — tells the encoder to prioritise frame rate over sharpness, which is correct for game and video content.",
+      "Max Frame Rate setting capped at 60 fps. Options above 60 (90, 120, 144) have been removed — they were not achievable with WebRTC screen content and caused confusion.",
+      "H264 is now the default codec (was VP9). H264 uses GPU hardware encoding on AMD/NVIDIA/Intel and is significantly faster at high resolutions. VP9 label updated to clarify it is software-only.",
+      "degradationPreference defaults to 'maintain-framerate' so the encoder drops quality rather than FPS under load."
+    ]
+  },
+  {
+    "version": "v4.1.0",
+    "title": "Screen Share Viewer FPS Fix (for real)",
+    "date": "May 12, 2026",
+    "items": [
+      "Fixed viewer being stuck at exactly 15 fps. The cause: rAF fires at the monitor refresh rate (every 16.67ms at 60Hz), so if a single JPEG encode took ~50ms the next eligible tick snapped to exactly 3 rAF cycles = 15fps regardless of your FPS setting.",
+      "Canvas is now scaled to max 1280px wide before encoding. This cuts per-frame encode time from ~50ms to under 20ms, which is within the 33ms budget for 30fps.",
+      "Replaced the single in-flight block with a pipeline depth of 2 — toBlob snapshots the canvas at call time, so a second frame can start encoding while the first is still being read. This keeps throughput at the full target fps even if one encode takes slightly longer than one interval."
+    ]
+  },
+  {
+    "version": "v4.0.9",
+    "title": "Screen Share Viewer FPS Fix",
+    "date": "May 12, 2026",
+    "items": [
+      "Fixed the viewer frame rate being stuck at ~12-13 fps regardless of your Max Frame Rate setting. The relay loop was hardcoded at 15 fps — it now reads ssMaxFps directly so the setting actually controls viewer fps too.",
+      "Switched frame encoding from synchronous toDataURL (which blocked the main thread and caused dropped frames) to asynchronous toBlob — the renderer no longer stalls while encoding each frame.",
+      "Reduced relay JPEG quality from 0.82 to 0.75 — visually identical for screen content but ~25% smaller per frame, reducing IPC throughput and allowing the encoder to keep up at higher frame rates."
+    ]
+  },
+  {
+    "version": "v4.0.8",
+    "title": "Screen Share Remove Fix & Higher Quality Limits",
+    "date": "May 12, 2026",
+    "items": [
+      "Fixed Remove button in the screen share panel — clicking Remove now immediately closes the viewer's window and stops the stream on their end.",
+      "Fixed viewer window closing manually (clicking X) leaving a relay loop running in the background wasting CPU.",
+      "Max frame rate raised: 90, 120, and 144 fps options added to screen share settings.",
+      "Max bitrate raised: 25 Mbps, 50 Mbps, 100 Mbps, and a No Limit option added — suitable for LAN use.",
+      "No Limit bitrate mode omits the encoder cap entirely, letting WebRTC negotiate the highest quality the connection can sustain."
+    ]
+  },
+  {
+    "version": "v4.0.7",
+    "title": "Screen Share Pop-Out Viewer Window",
+    "date": "May 12, 2026",
+    "items": [
+      "Screen share viewer is now a proper standalone OS window — it pops out of Elderwand entirely so you can drag it anywhere on your desktop, move it to a second monitor, resize it freely, or keep it on top of other apps.",
+      "The old viewer overlay that appeared inside the app and got stuck behind panels has been completely removed.",
+      "Press ⛶ or F11 inside the viewer window to go fullscreen. The window stays open independently; closing it does not affect the stream."
+    ]
+  },
+  {
+    "version": "v4.0.6",
+    "title": "Screen Share Viewer Fix (Root Cause)",
+    "date": "May 12, 2026",
+    "items": [
+      "Fixed the root cause of the viewer never appearing after clicking View: a stale peer guard on the sharer's side silently blocked every reconnect attempt after the first failed connection. The dead peer sat in memory and all subsequent View clicks were ignored.",
+      "Fixed viewer-side stale peer reuse: when a fresh offer arrived, the viewer was trying to reuse a dead/failed RTCPeerConnection instead of creating a new one, causing setRemoteDescription to fail silently.",
+      "Added visible status messages in chat at each step of the WebRTC handshake — both parties now see 'sending offer', 'connecting', 'connected', or 'failed' — making connection problems immediately obvious instead of silently failing."
+    ]
+  },
+  {
+    "version": "v4.0.5",
+    "title": "Screen Share Incoming Notification",
+    "date": "May 12, 2026",
+    "items": [
+      "When someone starts sharing their screen, a prominent notification banner now appears at the top of the Elderwand window — visible from any page (home, channel, wherever you are). Click 👁 View to open the stream immediately. Dismisses automatically after 20 seconds or when the share ends.",
+      "Fixed the root cause of 'viewer never appears': the old View link only appeared in the chat log, which is hidden when on the home/news page. You would never see it and the WebRTC connection would never start.",
+      "Screen share drag now uses delta-based movement — immune to multi-monitor coordinate offsets where Electron may report mouse position relative to the wrong screen origin."
+    ]
+  },
+  {
+    "version": "v4.0.3",
+    "title": "Screen Share Viewer Fix (Deep Dive)",
+    "date": "May 12, 2026",
+    "items": [
+      "Screen share viewer now always opens in the center of the screen.",
+      "Viewer can no longer be dragged outside the viewport.",
+      "Drag cancelled on window focus loss."
+    ]
+  },
+  {
+    "version": "v4.0.1",
+    "title": "Screen Share Viewer Fix",
+    "date": "May 12, 2026",
+    "items": [
+      "Fixed screen share viewer window spawning off-screen.",
+      "Fixed screen share viewer shooting off the edge of the screen when dragged."
+    ]
+  },
+  {
+    "version": "v4.0.0",
+    "title": "Portrait Icons, Friends Overhaul & Profile Redesign",
+    "date": "May 12, 2026",
+    "items": [
+      "Portrait icons — every user now has a WC3-style portrait icon displayed in the channel user list, clan panel, and friends list.",
+      "User list now shows icon → level → name → [clan tag] on every row, matching the classic Battle.net layout.",
+      "Icon picker added to the profile — open Edit Profile and choose from 43 portrait icons. More icons can be added to the server at any time.",
+      "Profile modal is now significantly larger with bigger, more readable fonts throughout.",
+      "Avatar photos removed — portrait icons replace them as the primary way to personalise your profile.",
+      "Friends panel overhauled: Favourites / Online / Offline sections, ⭐ star to pin friends, portrait icons per row, and live status showing which channel each friend is in.",
+      "Friends online badge now shows accurate count regardless of which channel your friends are in.",
+      "Clan panel redesigned with rank groups (Chieftain / Shaman / Grunt / Peon), online-first sorting, and portrait icons.",
+      "Clan MOTD is now shown as a banner when joining a clan channel.",
+      "/ping now announces your latency publicly in the channel: 'Username ping: 33ms'.",
+      "Display name change (/name) now propagates live to all connected users without requiring a rejoin.",
+      "Screen share viewer can now click a View link in chat to request a screen share directly, without the sharer needing to manually add them.",
+      "DevTools shortcut (F12 / Ctrl+Shift+I) restored after menu removal broke it."
+    ]
+  },
+  {
+    "version": "v3.8.0",
+    "title": "UI Polish & Command Improvements",
+    "date": "May 11, 2026",
+    "items": [
+      "Removed 'Chat Client' subtitle from the main app header — the banner now simply reads Elderwand.",
+      "Removed 'Battle Chat' tagline from the login screen for a cleaner look.",
+      "Panel Font Size slider moved from Fonts tab to Layout tab — all size and width controls are now in one place.",
+      "Panel Font Size maximum raised from 18 px to 25 px.",
+      "Panel Width range extended: minimum 300 px, maximum 1000 px.",
+      "/ping command now shows your current latency directly in the chat log (visible only to you): [Your ping: 33ms].",
+      "/dnd now toggles Do Not Disturb on and off without any arguments — first use enables, second use disables.",
+      "Channel join is now case-insensitive: /j general and /j General both join the same channel.",
+      "Status Message field removed from Settings → Behavior (unused feature).",
+      "Voice Settings → Audio Devices section redesigned: clearer labels, expanded descriptions, and a note about granting microphone permission."
+    ]
+  },
+  {
+    "version": "v3.7.0",
+    "title": "Screen Share Panel & PTT Fix",
+    "date": "May 7, 2026",
+    "items": [
+      "Screen sharing now opens in a dedicated window with a live preview of what you're sharing.",
+      "New per-user sharing controls: choose exactly who in your voice channel sees your screen — click Add or Remove next to each name.",
+      "Fixed screen sharing failing silently — ICE candidates were being dropped in a race condition on fast connections.",
+      "Fixed PTT key being stolen system-wide — any key set as PTT (Space, letters, F-keys, etc.) now still works normally in all other apps and text boxes."
+    ]
+  },
+  {
+    "version": "v3.6.2",
+    "title": "Update Check Reliability",
+    "date": "May 6, 2026",
+    "items": [
+      "Sign In is now locked from the first frame of the login screen — no race window where fast users could click through before the update check starts.",
+      "Update check delay reduced from 5s to 500ms."
+    ]
+  },
+  {
+    "version": "v3.6.1",
+    "title": "Drag-to-Resize Panel",
+    "date": "May 6, 2026",
+    "items": [
+      "Right panel can now be resized by dragging the left edge. Size syncs with the Settings slider and persists across sessions."
+    ]
+  },
+  {
+    "version": "v3.6.0",
+    "title": "Auto-Updater & Client Polish",
+    "date": "May 6, 2026",
+    "items": [
+      "Auto-updater is now live — Elderwand checks for updates on launch and downloads them silently in the background.",
+      "Login screen shows a live update status strip: Checking for updates → Downloading with % progress → Finishing up… → Restart & Install.",
+      "Sign In button is grayed out during the update check so you know it is in progress. It re-enables the moment the check completes.",
+      "'Finishing up…' spinner now appears when the download reaches 100% while the update is being unpacked and verified — no more frozen progress bar.",
+      "App version number is now displayed on the login screen.",
+      "Settings now correctly persist across logins — all toggles and sliders are restored exactly as you left them.",
+      "Panel Size slider now scales the Home, Profile, Settings, and Sign Out header buttons, the channel name, and the command bar buttons.",
+      "Removed the non-functional Interface Size slider from Settings.",
+      "Minimize to Tray option added in Settings → App Window — closing the window sends Elderwand to the system tray instead of exiting.",
+      "App now appears as 'Elderwand' with the correct icon in Task Manager instead of 'Electron'.",
+      "Fixed multiple Electron processes accumulating in Task Manager after repeated launches.",
+      "Fixed app lingering invisibly in Task Manager after closing — hidden overlay window is now properly destroyed on exit.",
+      "Patch notes on the home screen are now loaded live from GitHub — new notes appear for all users without requiring an app rebuild."
+    ]
+  },
+  {
+    "version": "v3.5.0",
+    "title": "PTT Elevated App Support & Reliability",
+    "date": "May 6, 2026",
+    "items": [
+      "Push-to-Talk now works when apps running as Administrator (such as TeamSpeak) have focus. Run Elderwand as Administrator to enable cross-app PTT against elevated processes.",
+      "PTT key setting now saves immediately when you press a new key — it no longer reverts to Space after restarting the app.",
+      "Fixed a bug where the PTT key would randomly change to a different key during use, causing the mic to stay on permanently.",
+      "Microphone no longer stays open after releasing the PTT key. A safety release is now sent whenever the PTT monitor restarts so the mic is never left stuck on.",
+      "Voice Settings now shows a real-time PTT hook status indicator: ⏳ initializing… while the hook is starting up, and ✔ ready when it is active. If Elderwand is not running as Administrator a warning is shown so you know cross-app PTT will not work.",
+      "Log files are now written to a daily-rotating logs/ folder with clean local-time timestamps — one file per day, easy to find and share."
+    ]
+  },
+  {
+    "version": "v3.4.0",
+    "title": "Global Push-to-Talk & More Bots",
+    "date": "May 5, 2026",
+    "items": [
+      "Push-to-Talk now works even when Elderwand is not the focused window — you can be in a game or any other app and your PTT key will still activate your mic correctly.",
+      "The green speaking glow now lights up reliably whenever you press your PTT key, regardless of which window is in front.",
+      "Six additional WC3-themed bots join the server over time: Kel'Thuzad, Rexxar, Malfurion, Grom Hellscream, Cairne Bloodhoof, and Medivh — each with their own character-specific flavour lines. The bot roster now totals twelve."
+    ]
+  },
+  {
+    "version": "v3.3.0",
+    "title": "Performance & Chat Bubbles",
+    "date": "May 5, 2026",
+    "items": [
+      "Chat Bubbles: a new overlay shows incoming messages in any corner of the screen — Top Left, Top Right, Bottom Left, or Bottom Right. Great for keeping an eye on chat while doing something else. Enable it in Settings → Behavior.",
+      "Regular chat, whispers, and emotes each appear with a distinct border colour so you can tell them apart at a glance. Your own messages never appear as bubbles.",
+      "Bubble settings: choose the corner, how long each bubble stays on screen (2–15 seconds), how many can stack at once, and the overall opacity.",
+      "Duck System Volume now works correctly — it lowers individual app entries in the Windows Volume Mixer instead of the master volume, so your voice stays at full volume while game audio and music are reduced. The previous implementation had a silent COM error that prevented it from working at all.",
+      "Voice chat now keeps working when Elderwand is not the focused window, so you can be in a call while playing a game.",
+      "Major CPU reduction: the battlefield animation is capped at 30 fps, only one canvas draws at a time (login or app, not both), and the canvas pauses automatically when Elderwand loses focus. A toggle in Settings → Appearance lets you keep it running if you prefer."
+    ]
+  },
+  {
+    "version": "v3.2.0",
+    "title": "Voice Polish & Quality of Life",
+    "date": "May 5, 2026",
+    "items": [
+      "Duck System Volume: when you join a voice channel, Elderwand can automatically lower your PC's master volume by a configurable amount so game audio or music doesn't drown out your friends. Volume is restored the moment you disconnect.",
+      "Noise gate: hard RMS cut below a configurable threshold — eliminates background hiss and keyboard noise without affecting your voice.",
+      "PTT release delay: keeps your mic open for a short tail after releasing Push-to-Talk so the last word of every sentence isn't clipped.",
+      "Hear Yourself: optionally route your own microphone back through your speakers for latency testing.",
+      "Audio bitrate selector: choose between Auto, 32 kbps, 64 kbps, 96 kbps, and 128 kbps to balance quality against bandwidth.",
+      "Join and leave sounds: a short WC3-style tone plays when users enter or leave your voice channel — each can be toggled independently.",
+      "Panel font size slider: a single slider in Settings scales the text in the Channel, Friends, Clan, and Voice panels simultaneously.",
+      "Speaking glow: your name and green dot now glow brightly when you talk — easier to tell at a glance who is speaking in a busy channel.",
+      "PTT speaking indicator fixed: the glow now activates correctly the moment you press your Push-to-Talk key.",
+      "Voice status moved into the Voice panel instead of a separate bar at the bottom of the screen — cleaner layout with mute, deafen, and disconnect always visible.",
+      "Clan rank management: Chieftains can now right-click any clan member to promote or demote them directly from the context menu.",
+      "Flood protection: five warnings before a 10-minute mute. Each warning applies a 1.5-second chat cooldown. Stop spamming and your warning count resets automatically.",
+      "Login screen fonts enlarged for better readability."
+    ]
+  },
+  {
+    "version": "v3.1.0",
+    "title": "Private Calls, Clan Invites & Bots",
+    "date": "May 4, 2026",
+    "items": [
+      "Private voice calls: right-click any user and choose Voice Call to invite them into a dedicated private room. They receive an on-screen notification with a 30-second countdown to Accept or Decline.",
+      "Both participants are automatically joined into the same private voice room on Accept. Private calls appear under a separate \"Private Calls\" section in the Voice tab.",
+      "Clan officers (Chieftain or Shaman) can now invite clanless players via the command /c invite <name> or by right-clicking a username and choosing Clan Invite.",
+      "Six WC3-themed chat bots (Arthas, Thrall, Jaina, Illidan, Sylvanas, Uther) join channels and converse automatically — useful for testing a fresh server with no real users online."
+    ]
+  },
+  {
+    "version": "v3.0.0",
+    "title": "Voice Chat Update",
+    "date": "May 4, 2026",
+    "items": [
+      "Full WebRTC voice chat is now live. Join any voice channel from the new Voice tab in the right panel — General, Gaming, and AFK are always available.",
+      "Real-time speaking indicators: a green pulse animates next to your name and the names of everyone talking in your channel.",
+      "Mute and Deafen buttons in the persistent voice status bar at the bottom of the screen. Deafen auto-mutes your microphone.",
+      "Voice Activation Detection (VAD) mode: your mic activates automatically when you speak above a configurable sensitivity threshold.",
+      "Push-to-Talk mode: hold any rebindable key to transmit. Works globally in the app without stealing focus from chat.",
+      "Per-user volume control: right-click any user in your voice channel to set their individual volume from 0 to 200%.",
+      "Full device management in Settings → Voice: select your microphone and speakers independently, with live device enumeration after permission is granted.",
+      "Input volume, output (master) volume, noise suppression, echo cancellation, and auto gain control toggles — all adjustable without rejoining.",
+      "Microphone test with a live level meter so you can confirm your mic is working before joining a call.",
+      "Automatic cleanup: disconnects gracefully on logout, app exit, and network drop."
+    ]
+  },
+  {
+    "version": "v2.1.0",
+    "title": "UI & Channels Polish",
+    "date": "May 4, 2026",
+    "items": [
+      "Settings panel redesigned as a centered modal with tabs on the left and content on the right — more like a real application and less like a sidebar.",
+      "Added Town Square as a permanent public channel. Quick-join chips for Town Square, General, Random, and Off-Topic appear in the Channels modal.",
+      "Home button (⌂) in the header returns you to the news page from any channel.",
+      "Side panel width is now a single unified slider — Channel List, Friends List, and Clan List all scale together.",
+      "Removed /channels command to reduce chat clutter; use the Channels button on the home screen instead.",
+      "Fixed channel join input not responding to typing in Electron's sandboxed renderer — solved with double requestAnimationFrame focus timing.",
+      "News page font now respects the Chat Font Size slider in Settings so everything scales consistently.",
+      "Clan channels ([TAG] format) are now protected: no one can join a clan channel unless that clan actually exists."
+    ]
+  },
+  {
+    "version": "v2.0.0",
+    "title": "Profile & Leveling Update",
+    "date": "May 3, 2026",
+    "items": [
+      "Added a full leveling system: earn XP for every minute active online. Level 1–255 with 15 WC3-themed rank titles from Peasant all the way to Warchief.",
+      "Profile pages with avatar, description, rank title, XP progress bar, time online, and clan affiliation.",
+      "Right-click any username in chat or the user list to view their profile, whisper, add as friend, and more.",
+      "Level badges now appear next to all usernames in the channel user list, color-coded by tier.",
+      "New News & Patch Notes landing page shown after login instead of auto-joining a channel.",
+      "Channels are now temporary — a user-created channel is removed automatically when the last person leaves.",
+      "Clan channels are auto-created when a clan is founded and persist until the clan is disbanded.",
+      "Login screen redesigned: transparent glass effect over the battlefield, modern line-style inputs, and a Remember Me option."
+    ]
+  },
+  {
+    "version": "v1.5.0",
+    "title": "Battlefield & Commands Update",
+    "date": "April 28, 2026",
+    "items": [
+      "Completely replaced the background with a live WC3 Reign of Chaos battlefield: moon, fortress silhouette, dead trees, fire pits with embers, forked lightning, storm clouds, and rainfall.",
+      "Added a channel-change flash transition animation (under 2 seconds) for atmosphere.",
+      "All panels and the chat area are now fully transparent so the battlefield is always visible.",
+      "Implemented the full WC3 Battle.net command set: /w, /r, /who, /whois, /squelch, /away, /dnd, /kick, /ban, /unban, /op, /topic, /stats, /time, /ping, and more.",
+      "Friends subcommands: /friends add, remove, msg, list, promote, demote.",
+      "Clan subcommands: /c msg, list, plus direct chat fallback."
+    ]
+  },
+  {
+    "version": "v1.0.0",
+    "title": "Foundation Release",
+    "date": "April 20, 2026",
+    "items": [
+      "Initial release of Elderwand v2 — a Warcraft 3 Reign of Chaos inspired real-time chat client.",
+      "WebSocket chat with public channels, private whispers, emotes, and join/leave notifications.",
+      "Clan system with four ranks: Peon, Grunt, Shaman, and Chieftain. Includes invites, MOTD, and rank management.",
+      "Friends list with live online status tracking across channels.",
+      "Away and Do Not Disturb status modes.",
+      "Secure account registration and login with bcrypt password hashing and 7-day session tokens.",
+      "Persistent SQLite database via sql.js with automatic saving after every write."
+    ]
+  }
+]
