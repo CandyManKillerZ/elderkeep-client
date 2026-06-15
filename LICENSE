@@ -1,0 +1,48 @@
+ElderKeep — Proprietary Software License
+Copyright (c) 2026 Mark van der Sluis. All Rights Reserved.
+
+================================================================================
+NOTICE: THIS IS PROPRIETARY AND CONFIDENTIAL SOFTWARE.
+================================================================================
+
+This software, including all source code, object code, designs, user
+interfaces, assets, documentation, and any accompanying materials
+(collectively, the "Software"), is the exclusive property of
+Mark van der Sluis (the "Owner") and is protected by copyright law and
+international treaties.
+
+NO LICENSE OR RIGHT IS GRANTED.
+
+No permission is granted to any person or entity to use, copy, reproduce,
+modify, merge, publish, distribute, sublicense, sell, lease, rent, transmit,
+display, perform, host, or create derivative works of the Software, in whole
+or in part, in any form or by any means, without the prior express written
+permission of the Owner.
+
+Unauthorized use, reproduction, or distribution of the Software, or any portion
+of it, is strictly prohibited and may result in severe civil and criminal
+penalties, and will be prosecuted to the maximum extent possible under the law.
+
+Possession of a compiled copy or the source code of the Software does not
+grant any right or license to use it.
+
+THIRD-PARTY COMPONENTS.
+
+The Software incorporates third-party open-source components, each of which
+remains subject to its own respective license (e.g., MIT, ISC, BSD, Apache).
+Those components are NOT covered by this license and are used in accordance
+with their original terms. The corresponding license texts are retained within
+the distributed application. The Owner claims no ownership over those
+third-party components. This license applies solely to the original work
+authored by the Owner.
+
+NO WARRANTY.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+OWNER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+For licensing inquiries, contact: noreply@elderkeep.app
