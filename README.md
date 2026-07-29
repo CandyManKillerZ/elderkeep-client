@@ -8,7 +8,7 @@ ElderKeep is a desktop group-chat app with built-in voice rooms, screen sharing,
 game browser — wrapped in the classic Warcraft III Reign of Chaos / Battle.net look and feel.
 Download it and you're dropped straight onto the **public ElderKeep server** — free, always
 online, open to anyone, no invite required. Chat, voice call, and screen-share with friends,
-or start your own clan. Prefer to run things yourself? Point the client at your own server instead.
+or start your own clan.
 
 [**⬇ Download the latest release**](https://github.com/CandyManKillerZ/elderkeep-client/releases/latest)
 
@@ -111,9 +111,9 @@ Windows 10/11 and Linux (x64). A mobile/web build is also available via Capacito
 
 ## Self-Hosting
 
-ElderKeep ships pointed at the public server, but you can run your own. Enter any server in the
-**Server Address** field — prefix it with `wss://` (or `https://`) to use TLS, or use a bare
-`host:port` for a plain connection. The server is distributed separately.
+**Self-hosting is not currently available.** The ElderKeep server software is not public —
+ElderKeep only connects to the official public server. Everyone downloading this client joins
+the same community.
 
 ## License
 
