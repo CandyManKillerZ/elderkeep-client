@@ -6,11 +6,35 @@
 
 ElderKeep is a desktop group-chat app with built-in voice rooms, screen sharing, and a unified
 game browser — wrapped in the classic Warcraft III Reign of Chaos / Battle.net look and feel.
-Friends-first, self-hosting-friendly, and always up to date.
+Download it and you're dropped straight onto the **public ElderKeep server** — free, always
+online, open to anyone, no invite required. Chat, voice call, and screen-share with friends,
+or start your own clan. Prefer to run things yourself? Point the client at your own server instead.
 
 [**⬇ Download the latest release**](https://github.com/CandyManKillerZ/elderkeep-client/releases/latest)
 
 </div>
+
+---
+
+## Screenshots
+
+<div align="center">
+
+|                                                                                            |                                                                                                |
+|:------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------:|
+| ![Chat](docs/screenshots/chat.jpg)                                                          | ![Play Games](docs/screenshots/play-games.jpg)                                                 |
+| Chat — channels, live user list, voice/friends/clan tabs                                    | Play Games — browse and join servers for 30+ PC games, Roblox, and Warcraft III                |
+| ![Voice settings](docs/screenshots/voice-settings.jpg)                                       | ![Screen share settings](docs/screenshots/screenshare-settings.jpg)                             |
+| Voice — device selection, noise suppression, echo cancellation                              | Screen Share — resolution, frame rate, bitrate budget, system audio                             |
+
+</div>
+
+<details>
+<summary>Login screen</summary>
+
+![Login](docs/screenshots/login.jpg)
+
+</details>
 
 ---
 
