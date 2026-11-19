@@ -1,0 +1,1123 @@
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold:       #c8a020;
+  --gold-bright:#f0d040;
+  --gold-dim:   rgba(200,160,32,0.28);
+  --gold-glow:  rgba(200,150,20,0.35);
+  --bg:         #08080f;
+  --bg-alt:     #0c0c18;
+  --bg-card:    #0f0f1d;
+  --text:       #dcdcec;
+  --text-dim:   #a2a2b8;
+  --text-muted: #76768e;
+  --font-title: 'IM Fell English', Georgia, serif;
+  /* Prose font. Was 'Share Tech Mono' — a thin decorative face, unreadable at body sizes. */
+  --font-ui:    'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body:  'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Mono is now DECORATION ONLY: short uppercase labels, buttons, version numbers. */
+  --font-mono:  'Share Tech Mono', 'Courier New', monospace;
+  --nav-h:      58px;
+  --r:          3px;
+  --max-w:      1100px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--gold); text-decoration: none; transition: color 0.15s; }
+a:hover { color: var(--gold-bright); }
+
+img { display: block; }
+
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-block;
+  padding: 11px 30px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.btn-gold {
+  background: linear-gradient(180deg, rgba(80,58,8,0.95) 0%, rgba(38,26,4,0.98) 100%);
+  border-color: var(--gold);
+  color: var(--gold-bright);
+  box-shadow: inset 0 1px 0 rgba(255,220,60,0.1);
+}
+.btn-gold:hover {
+  background: linear-gradient(180deg, rgba(110,82,12,0.95) 0%, rgba(60,42,6,0.98) 100%);
+  color: #fff;
+  box-shadow: 0 0 22px rgba(200,160,32,0.28), inset 0 1px 0 rgba(255,220,60,0.15);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: rgba(200,160,32,0.3);
+  color: var(--text-dim);
+}
+.btn-ghost:hover {
+  border-color: var(--gold);
+  color: var(--gold-bright);
+}
+
+/* ===== BETA BANNER ===== */
+#beta-banner {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 300;
+  height: 34px;
+  background: rgba(8,8,15,0.97);
+  border-bottom: 1px solid rgba(200,160,32,0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 20px;
+}
+.beta-pill {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  color: #0a0a12;
+  background: var(--gold);
+  padding: 2px 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.beta-text {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+}
+
+/* ===== NAV ===== */
+#nav {
+  position: fixed;
+  top: 34px; left: 0; right: 0;
+  height: var(--nav-h);
+  /* No backdrop-filter here. It is fixed and full-width, so it re-blurred the hero's
+     filtered background on every scroll frame - the cause of the top-of-page jank
+     reported on 2026-11-19. At 97% opacity a blur is invisible anyway. */
+  background: rgba(8,8,15,0.97);
+  border-bottom: 1px solid var(--gold-dim);
+  z-index: 200;
+}
+.nav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-title);
+  font-size: 19px;
+  color: var(--gold-bright);
+  letter-spacing: 2px;
+  flex-shrink: 0;
+}
+.nav-brand img { border-radius: 4px; }
+.nav-menu {
+  display: flex;
+  gap: 22px;
+  flex: 1;
+}
+.nav-menu a {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.nav-menu a:hover, .nav-menu a.active { color: var(--gold-bright); }
+.nav-dl-btn {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 7px 18px;
+  border: 1px solid var(--gold);
+  color: var(--gold-bright);
+  background: rgba(200,160,32,0.07);
+  border-radius: var(--r);
+  flex-shrink: 0;
+}
+.nav-dl-btn:hover { background: rgba(200,160,32,0.16); color: #fff; }
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* ===== HERO ===== */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('assets/Castle.jpg');
+  background-size: cover;
+  background-position: center 35%;
+  filter: brightness(0.35) saturate(0.65);
+  /* Own layer: the filter rasterises once instead of on every scroll frame. */
+  transform: translateZ(0);
+  will-change: transform;
+}
+.hero-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 40%, transparent 0%, rgba(8,8,15,0.75) 100%),
+    linear-gradient(to bottom, rgba(8,8,15,0.2) 0%, rgba(8,8,15,0.8) 100%);
+}
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  padding: 154px 24px 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.hero-logo {
+  width: 92px;
+  height: 92px;
+  border-radius: 18px;
+  box-shadow: 0 0 50px rgba(200,150,20,0.45), 0 6px 32px rgba(0,0,0,0.9);
+  margin-bottom: 6px;
+}
+.hero-title {
+  font-family: var(--font-title);
+  font-size: clamp(54px, 9vw, 100px);
+  color: var(--gold-bright);
+  letter-spacing: 10px;
+  text-shadow: 0 0 50px var(--gold-glow), 0 4px 12px rgba(0,0,0,1);
+  line-height: 1;
+}
+.hero-badge {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.hero-tagline {
+  font-family: var(--font-title);
+  font-size: clamp(19px, 3vw, 27px);
+  color: var(--text);
+  font-style: italic;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+  margin: 6px 0 4px;
+  line-height: 1.4;
+}
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 6px;
+}
+.hero-os {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 1.5px;
+  margin-top: 4px;
+}
+.hero-shimmer {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(200,140,20,0.5) 20%,
+    rgba(240,200,60,0.95) 50%,
+    rgba(200,140,20,0.5) 80%,
+    transparent 100%
+  );
+}
+
+/* ===== SECTIONS ===== */
+.section { padding: 88px 0; }
+.section-alt { background: var(--bg-alt); }
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 28px; }
+
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 56px;
+}
+.section-head::before, .section-head::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+}
+.section-head::before {
+  background: linear-gradient(90deg, transparent, var(--gold-dim));
+}
+.section-head::after {
+  background: linear-gradient(90deg, var(--gold-dim), transparent);
+}
+.section-head h2 {
+  font-family: var(--font-title);
+  font-size: clamp(26px, 4vw, 40px);
+  color: var(--gold-bright);
+  letter-spacing: 5px;
+  text-shadow: 0 0 28px var(--gold-glow);
+  white-space: nowrap;
+}
+
+/* ===== ABOUT ===== */
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+.about-lead {
+  font-family: var(--font-title);
+  font-size: 19px;
+  font-style: italic;
+  color: var(--gold-bright);
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+.about-text p {
+  color: var(--text-dim);
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+.rune-list {
+  list-style: none;
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.rune-list li {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+  padding-left: 22px;
+  position: relative;
+  line-height: 1.5;
+}
+.rune-list li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-size: 10px;
+  top: 1px;
+}
+
+/* Preview */
+.about-preview { position: relative; }
+.preview-chrome {
+  border: 1px solid var(--gold-dim);
+  border-radius: 7px;
+  overflow: hidden;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.7), 0 0 0 1px rgba(200,160,32,0.08);
+  background: #06060e;
+  position: relative;
+}
+.preview-bar {
+  height: 32px;
+  background: #0a0a14;
+  border-bottom: 1px solid var(--gold-dim);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot.r { background: #ff5f57; }
+.dot.y { background: #ffbd2e; }
+.dot.g { background: #28c840; }
+.preview-title-txt {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+/* The app layout needs a wide window. Rendering the iframe at the panel's own width
+   squashed it - the user list was cut off and the chat wrapped to two words a line.
+   So it renders at a real desktop size and is SCALED down to fit (JS sets the factor),
+   which is also what makes the enlarged view look like the same window, only bigger. */
+.preview-viewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  /* Without this the 1280px iframe inside stretches the grid column (a `1fr` track
+     defaults to min-width:auto), so "100%" measures 1280 and the scale computes to 1 -
+     the iframe then renders unscaled and the page grows a horizontal scrollbar. */
+  min-width: 0;
+}
+.about-layout > * { min-width: 0; }
+/* Scoped to .preview-viewport, NOT .preview-chrome: the viewport is MOVED into the
+   enlarge overlay, and a rule anchored to .preview-chrome stops applying the moment it
+   leaves - the iframe then collapsed to the browser default size inside the overlay. */
+.preview-viewport iframe {
+  width: 1280px;
+  height: 800px;
+  border: none;
+  display: block;
+  pointer-events: none;
+  overflow: hidden;
+  transform-origin: top left;
+}
+.preview-overlay {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, rgba(8,8,15,0.85));
+  pointer-events: none;
+}
+.preview-caption {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 12px;
+  letter-spacing: 1px;
+}
+
+/* ===== FEATURES ===== */
+.feat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 18px;
+}
+.feat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--gold-dim);
+  border-radius: var(--r);
+  padding: 28px 22px;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.feat-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200,160,32,0.5), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.feat-card:hover {
+  border-color: rgba(200,160,32,0.5);
+  box-shadow: 0 6px 28px rgba(0,0,0,0.5), 0 0 24px rgba(200,160,32,0.06);
+  transform: translateY(-2px);
+}
+.feat-card:hover::after { opacity: 1; }
+.feat-icon {
+  font-size: 26px;
+  margin-bottom: 14px;
+  display: block;
+}
+.feat-card h3 {
+  font-family: var(--font-title);
+  font-size: 18px;
+  color: var(--gold-bright);
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+.feat-card p {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.65;
+}
+
+/* ===== DOWNLOAD ===== */
+.dl-sub {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+  margin-bottom: 48px;
+  text-align: center;
+}
+.dl-grid {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+.dl-card {
+  background: var(--bg-card);
+  border: 1px solid var(--gold-dim);
+  border-radius: var(--r);
+  padding: 36px 44px;
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.dl-card:hover {
+  border-color: rgba(200,160,32,0.5);
+  box-shadow: 0 0 32px rgba(200,160,32,0.07);
+}
+.dl-os-icon { font-size: 42px; margin-bottom: 4px; }
+.dl-card h3 {
+  font-family: var(--font-title);
+  font-size: 24px;
+  color: var(--gold-bright);
+  letter-spacing: 2px;
+}
+.dl-card-beta {
+  border-color: rgba(200,160,32,0.18);
+  position: relative;
+}
+.dl-card-beta:hover {
+  border-color: rgba(200,160,32,0.35);
+}
+.dl-beta-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-family: var(--font-ui);
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--gold);
+  border: 1px solid rgba(200,160,32,0.4);
+  padding: 2px 7px;
+  border-radius: 2px;
+  background: rgba(200,160,32,0.07);
+}
+.dl-beta-note {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  margin-top: -4px;
+}
+.btn-ghost-gold {
+  display: inline-block;
+  padding: 11px 30px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  border: 1px solid rgba(200,160,32,0.35);
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: all 0.15s;
+  color: var(--text-dim);
+  background: transparent;
+}
+.btn-ghost-gold:hover {
+  border-color: var(--gold);
+  color: var(--gold-bright);
+}
+.dl-req {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  text-align: center;
+  margin-bottom: 4px;
+}
+.sysreq {
+  display: inline-block;
+  text-align: left;
+  border: 1px solid var(--gold-dim);
+  border-radius: var(--r);
+  padding: 26px 36px;
+  background: var(--bg-alt);
+}
+.sysreq-title {
+  font-family: var(--font-title);
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 3px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+.sysreq-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sysreq-list li {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--text-dim);
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  line-height: 1.5;
+}
+.sysreq-lbl {
+  color: var(--gold);
+  min-width: 68px;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+/* ===== CHANGELOG ===== */
+#changelog-list {
+  text-align: left;
+  margin-bottom: 28px;
+}
+.cl-entry {
+  border: 1px solid var(--gold-dim);
+  border-radius: var(--r);
+  background: var(--bg-card);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.cl-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: background 0.15s;
+  user-select: none;
+}
+.cl-header:hover { background: rgba(200,160,32,0.04); }
+.cl-version {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--gold-bright);
+  letter-spacing: 1.5px;
+  flex-shrink: 0;
+  min-width: 68px;
+}
+.cl-title {
+  font-family: var(--font-title);
+  font-size: 16px;
+  color: var(--text);
+  flex: 1;
+}
+.cl-date {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+.cl-chevron {
+  font-size: 11px;
+  color: var(--text-muted);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+.cl-entry.open .cl-chevron { transform: rotate(180deg); color: var(--gold); }
+.cl-body {
+  display: none;
+  padding: 4px 20px 20px;
+  border-top: 1px solid var(--gold-dim);
+}
+.cl-entry.open .cl-body { display: block; }
+.cl-body ul {
+  list-style: none;
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.cl-body li {
+  font-size: 13px;
+  color: var(--text-dim);
+  padding-left: 18px;
+  position: relative;
+  line-height: 1.55;
+}
+.cl-body li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-size: 16px;
+  line-height: 1.2;
+}
+.loading-txt {
+  font-family: var(--font-ui);
+  color: var(--text-muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 36px;
+  letter-spacing: 1px;
+}
+
+/* ===== FAQ ===== */
+.faq-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.faq-item { border-bottom: 1px solid var(--gold-dim); }
+.faq-q {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 19px 2px;
+  cursor: pointer;
+  font-family: var(--font-title);
+  font-size: 17px;
+  color: var(--text);
+  gap: 16px;
+  transition: color 0.15s;
+  user-select: none;
+}
+.faq-q:hover { color: var(--gold-bright); }
+.faq-q .ch { font-size: 13px; color: var(--text-muted); transition: transform 0.2s; flex-shrink: 0; }
+.faq-item.open .faq-q { color: var(--gold-bright); }
+.faq-item.open .faq-q .ch { transform: rotate(180deg); color: var(--gold); }
+.faq-a {
+  display: none;
+  padding: 2px 0 20px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.75;
+  letter-spacing: 0.3px;
+}
+.faq-item.open .faq-a { display: block; }
+
+/* ===== FOOTER ===== */
+#footer {
+  background: #050509;
+  border-top: 1px solid var(--gold-dim);
+  padding: 30px 24px 26px;
+  text-align: center;
+}
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.footer-inner span {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.footer-inner a {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+.footer-copy {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+/* ===== ANIMATIONS ===== */
+.anim-in {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.anim-in.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 820px) {
+  .about-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .about-preview { order: -1; }
+  /* height now set in the LIVE PREVIEW block below */
+}
+
+@media (max-width: 768px) {
+  .nav-menu { display: none; }
+  .nav-menu.open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: var(--nav-h);
+    left: 0; right: 0;
+    background: rgba(8,8,15,0.97);
+    border-bottom: 1px solid var(--gold-dim);
+    padding: 18px 28px;
+    gap: 16px;
+    z-index: 199;
+  }
+  .nav-toggle { display: flex; }
+  .nav-dl-btn { display: none; }
+  .feat-grid { grid-template-columns: 1fr 1fr; }
+  .dl-grid { flex-direction: column; align-items: center; }
+  .sysreq { padding: 20px 24px; }
+  .cl-date { display: none; }
+}
+
+@media (max-width: 520px) {
+  .beta-text { display: none; }
+
+  .feat-grid { grid-template-columns: 1fr; }
+  .hero-title { letter-spacing: 5px; }
+  .section { padding: 64px 0; }
+  .section-head { margin-bottom: 40px; }
+  .dl-card { padding: 28px 24px; min-width: unset; width: 100%; }
+}
+
+/* ── Screenshots ─────────────────────────────────────────────── */
+.screens-sub{text-align:center;color:var(--muted,#9a8f78);margin:-6px 0 26px;font-size:15px}
+.screens-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:22px}
+.shot{margin:0;cursor:zoom-in;background:#0b0b12;border:1px solid rgba(200,160,32,.22);
+  border-radius:4px;overflow:hidden;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.shot:hover,.shot:focus-visible{transform:translateY(-3px);border-color:rgba(200,160,32,.65);
+  box-shadow:0 10px 30px rgba(0,0,0,.55);outline:none}
+.shot img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;background:#0b0b12}
+.shot figcaption{padding:13px 15px 15px;font-size:14px;line-height:1.55;color:var(--muted,#9a8f78)}
+.shot figcaption b{display:block;color:var(--gold,#d8b44a);font-family:var(--title,'IM Fell English',serif);
+  font-size:17px;margin-bottom:4px;letter-spacing:.3px}
+
+/* Lightbox — the full-size shot, click or Esc to leave */
+#shot-lb{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;
+  background:rgba(4,4,8,.94);padding:28px;cursor:zoom-out}
+#shot-lb.open{display:flex}
+#shot-lb img{max-width:100%;max-height:100%;border:1px solid rgba(200,160,32,.4);border-radius:4px;
+  box-shadow:0 20px 70px rgba(0,0,0,.8)}
+#shot-lb-close{position:absolute;top:18px;right:22px;width:42px;height:42px;cursor:pointer;
+  background:rgba(0,0,0,.5);color:#d8b44a;border:1px solid rgba(200,160,32,.45);border-radius:50%;
+  font-size:19px;line-height:1}
+#shot-lb-close:hover{background:rgba(200,160,32,.2)}
+@media(max-width:600px){.screens-grid{grid-template-columns:1fr}#shot-lb{padding:10px}}
+
+/* "Who it's for" line in About */
+.about-who{border-left:2px solid rgba(200,160,32,.45);padding:2px 0 2px 14px;margin:16px 0}
+.about-who b{color:var(--gold,#d8b44a)}
+
+/* ===== TYPOGRAPHY PASS ===================================================
+   Everything that is a sentence reads in Inter at a real size with no
+   tracking; only short uppercase labels keep the mono face. Declared last so
+   it wins over the per-component sizes above without touching them.
+   ------------------------------------------------------------------------ */
+
+/* -- short uppercase labels: keep the mono character, nudged up a size -- */
+.btn,
+.btn-ghost-gold      { font-family: var(--font-mono); font-size: 13px; }
+.beta-pill           { font-family: var(--font-mono); font-size: 10px; }
+.nav-menu a          { font-family: var(--font-mono); font-size: 13px; letter-spacing: 1.6px; }
+.nav-dl-btn          { font-family: var(--font-mono); font-size: 13px; }
+.hero-badge          { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); }
+.hero-os             { font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); }
+.preview-title-txt   { font-family: var(--font-mono); font-size: 12px; }
+.dl-beta-badge       { font-family: var(--font-mono); font-size: 10px; }
+.sysreq-lbl          { font-family: var(--font-mono); font-size: 12px; }
+.cl-version          { font-family: var(--font-mono); font-size: 13px; min-width: 76px; }
+.cl-date             { font-family: var(--font-mono); font-size: 12.5px; }
+
+/* -- prose: readable face, readable size, no tracking -- */
+.beta-text,
+.rune-list li,
+.preview-caption,
+.dl-sub,
+.dl-beta-note,
+.dl-req,
+.sysreq-list li,
+.loading-txt,
+.faq-a,
+.footer-inner span,
+.footer-inner a,
+.footer-copy         { font-family: var(--font-ui); letter-spacing: 0; }
+
+.beta-text           { font-size: 14px; }
+.about-lead          { font-size: 23px; line-height: 1.45; }
+.about-text p        { font-size: 16.5px; line-height: 1.7; }
+.rune-list li        { font-size: 15.5px; line-height: 1.6; }
+.preview-caption     { font-size: 14px; }
+.feat-card h3        { font-size: 21px; }
+.feat-card p         { font-size: 15.5px; line-height: 1.65; }
+.dl-sub              { font-size: 16px; }
+.dl-card h3          { font-size: 26px; }
+.dl-beta-note        { font-size: 13.5px; }
+.dl-req              { font-size: 14px; }
+.sysreq-title        { font-size: 16px; }
+.sysreq-list li      { font-size: 15.5px; line-height: 1.6; }
+.sysreq-lbl          { min-width: 78px; }
+.cl-title            { font-size: 19px; }
+.cl-body li          { font-size: 15.5px; line-height: 1.65; }
+.loading-txt         { font-size: 15px; }
+.faq-q               { font-size: 20px; }
+.faq-a               { font-size: 16px; line-height: 1.75; }
+.footer-inner span,
+.footer-inner a      { font-size: 14.5px; }
+.footer-copy         { font-size: 13.5px; }
+.screens-sub         { font-size: 17px; }
+.shot figcaption     { font-size: 15.5px; line-height: 1.6; }
+.shot figcaption b   { font-size: 19px; }
+
+/* -- headings: a touch larger so the new body size doesn't crowd them -- */
+.hero-tagline        { font-size: clamp(22px, 3.2vw, 30px); }
+.section-head h2     { font-size: clamp(28px, 4.2vw, 44px); }
+
+@media (max-width: 520px) {
+  body               { font-size: 16px; }
+  .about-lead        { font-size: 20px; }
+  .faq-q             { font-size: 18px; }
+}
+
+/* "Maybe later" roadmap note — an honest tag for a thing people ask for that
+   isn't built yet. Deliberately quieter than a feature row. */
+/* `.about-text p` is more specific, so the selector matches it to win. */
+.about-text p.roadmap-note,
+.roadmap-note {
+  margin-top: 22px;
+  padding: 14px 16px;
+  border: 1px dashed rgba(200,160,32,.32);
+  border-radius: var(--r);
+  background: rgba(200,160,32,.04);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text-dim);
+}
+.roadmap-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  border: 1px solid rgba(200,160,32,.45);
+  border-radius: 2px;
+  padding: 2px 8px;
+  margin-right: 10px;
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.roadmap-note b { color: var(--text); font-weight: 600; }
+
+/* ===== CONTACT ===== */
+.contact-lead {
+  text-align: center;
+  max-width: 640px;
+  margin: -14px auto 34px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text-dim);
+}
+.contact-steps {
+  max-width: 640px;
+  margin: 0 auto;
+  border: 1px solid var(--gold-dim);
+  border-radius: var(--r);
+  background: var(--bg-card);
+  padding: 28px 34px;
+}
+.contact-steps ol {
+  margin: 0;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.contact-steps li {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text-dim);
+  padding-left: 6px;
+}
+.contact-steps li::marker { color: var(--gold); font-weight: 600; }
+.contact-steps b { color: var(--text); font-weight: 600; }
+.contact-steps code {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: var(--gold-bright);
+  background: rgba(200,160,32,.1);
+  border: 1px solid rgba(200,160,32,.4);
+  border-radius: 2px;
+  padding: 2px 10px;
+  margin: 0 2px;
+  white-space: nowrap;
+}
+.contact-name {
+  color: var(--gold-bright) !important;
+  font-family: var(--font-mono);
+  letter-spacing: 1.5px;
+}
+.contact-alt { color: var(--text-muted); }
+.contact-foot {
+  text-align: center;
+  max-width: 640px;
+  margin: 26px auto 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+.contact-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+@media (max-width: 520px) {
+  .contact-steps { padding: 22px 20px; }
+  .contact-steps li { font-size: 15px; }
+}
+
+/* ===== REVIEWS ===== */
+.rv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+}
+.rv-card {
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--gold-dim);
+  border-radius: var(--r);
+  padding: 22px 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.rv-stars {
+  font-size: 17px;
+  letter-spacing: 3px;
+  color: var(--gold-bright);
+  line-height: 1;
+}
+.rv-stars .rv-dim { color: rgba(200,160,32,.22); }
+.rv-card blockquote {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+}
+.rv-card figcaption {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  margin-top: auto;
+}
+.rv-foot {
+  text-align: center;
+  margin-top: 28px;
+  font-size: 15px;
+  color: var(--text-muted);
+}
+.rv-foot code {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--gold-bright);
+  background: rgba(200,160,32,.1);
+  border: 1px solid rgba(200,160,32,.35);
+  border-radius: 2px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+@media (max-width: 600px) { .rv-grid { grid-template-columns: 1fr; } }
+
+/* ===== LIVE PREVIEW ===== */
+/* Bigger than it was (340px), and clickable. It used to be a small decorative panel
+   people could not actually read — reported 2026-11-19. */
+.preview-chrome { cursor: zoom-in; }
+.preview-chrome:hover, .preview-chrome:focus-visible {
+  border-color: rgba(200,160,32,.6);
+  box-shadow: 0 12px 48px rgba(0,0,0,.7), 0 0 26px rgba(200,160,32,.14);
+  outline: none;
+}
+
+.preview-expand {
+  position: absolute;
+  bottom: 12px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  background: rgba(8,8,15,.82);
+  border: 1px solid rgba(200,160,32,.45);
+  border-radius: 2px;
+  padding: 5px 12px;
+  opacity: 0;
+  transition: opacity .18s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.preview-chrome:hover .preview-expand,
+.preview-chrome:focus-visible .preview-expand { opacity: 1; }
+
+/* Full-size overlay. The SAME iframe is moved in and out, never cloned — a second copy
+   would mean a second canvas animation running behind the first. */
+#preview-lb {
+  position: fixed; inset: 0; z-index: 9999;
+  display: none; align-items: center; justify-content: center;
+  background: rgba(4,4,8,.95);
+  padding: 34px;
+}
+#preview-lb.open { display: flex; }
+#preview-lb-inner {
+  width: min(1280px, 100%);
+  height: min(800px, 100%);
+  border: 1px solid rgba(200,160,32,.45);
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,.85);
+  background: #06060e;
+}
+#preview-lb-inner .preview-viewport { width: 100%; height: 100%; }
+#preview-lb-inner iframe { border: none; display: block; transform-origin: top left; }
+#preview-lb-close {
+  position: absolute; top: 18px; right: 22px; z-index: 2;
+  width: 42px; height: 42px; cursor: pointer;
+  background: rgba(0,0,0,.5); color: var(--gold-bright);
+  border: 1px solid rgba(200,160,32,.45); border-radius: 50%;
+  font-size: 19px; line-height: 1;
+}
+#preview-lb-close:hover { background: rgba(200,160,32,.2); }
+
+@media (max-width: 600px) { #preview-lb { padding: 10px; } }

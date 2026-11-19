@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ElderKeep — A private space for your friend group</title>
+<meta name="description" content="Free voice chat, screen sharing and text chat for one group of friends who want their own place to hang out. Windows, Linux and Android. No ads, no subscriptions, no servers full of strangers.">
+<meta property="og:title" content="ElderKeep — A private space for your friend group">
+<meta property="og:description" content="Voice, screen share and chat for your group. Free, private, yours.">
+<meta property="og:image" content="assets/shots/chat.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0a0a12">
+<link rel="icon" href="assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=11">
+</head>
+<body>
+
+<!-- BETA BANNER -->
+<div id="beta-banner">
+  <span class="beta-pill">IN DEVELOPMENT</span>
+  <span class="beta-text">Stable enough to use every day, but still being built — things change, and features get added when the people using it ask for them.</span>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#">
+      <img src="assets/icon_64.png" alt="" width="26" height="26">
+      <span>ElderKeep</span>
+    </a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu">☰</button>
+    <div class="nav-menu" id="nav-menu">
+      <a href="#about">About</a>
+      <a href="#screens">Screenshots</a>
+      <a href="#features">Features</a>
+      <a href="#download">Download</a>
+      <a href="#changelog">Changelog</a>
+      <a href="#faq">FAQ</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#download" class="nav-dl-btn">⬇ Download</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-inner">
+    <img src="assets/icon_256.png" alt="ElderKeep" class="hero-logo">
+    <h1 class="hero-title">ElderKeep</h1>
+    <p class="hero-badge">FREE &nbsp;·&nbsp; VOICE &nbsp;·&nbsp; SCREEN SHARE &nbsp;·&nbsp; CHAT</p>
+    <p class="hero-tagline">Your friends. Your server.<br>Your rules.</p>
+    <div class="hero-actions">
+      <a href="#download" class="btn btn-gold">Download Free</a>
+      <a href="#screens" class="btn btn-ghost">See It</a>
+    </div>
+    <p class="hero-os">Windows &nbsp;·&nbsp; Linux &nbsp;·&nbsp; Android</p>
+  </div>
+  <div class="hero-shimmer"></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="section-head"><h2>What is ElderKeep?</h2></div>
+    <div class="about-layout">
+      <div class="about-text">
+        <p class="about-lead">One group of friends. One place to hang out.</p>
+        <p>ElderKeep is a desktop app for a circle of friends who want somewhere that belongs to them — talk, share a screen, and keep a conversation running between sessions. Not a public platform you get lost in. Not a group chat that drops the call at eight people.</p>
+        <p class="about-who"><b>Who it's for:</b> a friend group, a guild, a few housemates, a small team — anyone who has outgrown a group chat and doesn't want to rent a server or hand their conversations to an ad company.</p>
+        <ul class="rune-list">
+          <li><b>Voice rooms</b> — push-to-talk or open mic, and your game audio ducks while you speak</li>
+          <li><b>Screen sharing</b> — show the room what you're playing, watching or working on</li>
+          <li><b>Channels of your own</b> — split the group into rooms and set who runs them</li>
+          <li><b>Chat that stays put</b> — images, videos and links preview inline, history is there tomorrow</li>
+          <li><b>Private messages</b> — end-to-end encrypted, readable only by the two of you</li>
+          <li><b>Files straight across</b> — sent peer to peer, never stored on a server</li>
+        </ul>
+        <p class="roadmap-note">
+          <span class="roadmap-tag">Maybe later</span>
+          Right now there is one ElderKeep server and everyone is on it. <b>Self-hosting isn't
+          available yet</b> — but if enough people ask for it, it gets built. No promise, no date.
+        </p>
+      </div>
+      <div class="about-preview anim-in">
+        <div class="preview-chrome" id="preview-chrome" role="button" tabindex="0"
+             aria-label="Open the live interface preview full size">
+          <div class="preview-bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="preview-title-txt">ElderKeep</span>
+          </div>
+          <div class="preview-viewport" id="preview-viewport">
+            <iframe id="preview-frame" src="preview.html?v=11" title="ElderKeep UI" scrolling="no" tabindex="-1"></iframe>
+          </div>
+          <div class="preview-overlay"></div>
+          <span class="preview-expand">Click to enlarge</span>
+        </div>
+        <p class="preview-caption">The real interface, running live — click it</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENSHOTS -->
+<section id="screens" class="section section-alt">
+  <div class="container">
+    <div class="section-head"><h2>A Look Inside</h2></div>
+    <p class="screens-sub">Real screens from the app. Click any of them to open it full size.</p>
+    <div class="screens-grid">
+        <figure class="shot anim-in" data-full="assets/shots/chat.jpg" tabindex="0">
+          <img src="assets/shots/chat-thumb.jpg" alt="Your channel — ElderKeep screenshot" loading="lazy" width="720" height="450" decoding="async">
+          <figcaption><b>Your channel</b> Everyone in one place, with history that is still there tomorrow. Images, videos and links open inline.</figcaption>
+        </figure>
+        <figure class="shot anim-in" data-full="assets/shots/voice.jpg" tabindex="0">
+          <img src="assets/shots/voice-thumb.jpg" alt="Voice rooms — ElderKeep screenshot" loading="lazy" width="720" height="450" decoding="async">
+          <figcaption><b>Voice rooms</b> Split the group into rooms. See who is talking, set anyone’s volume, and watch the LIVE badge when someone shares a screen.</figcaption>
+        </figure>
+        <figure class="shot anim-in" data-full="assets/shots/arcade.jpg" tabindex="0">
+          <img src="assets/shots/arcade-thumb.jpg" alt="Things to do together — ElderKeep screenshot" loading="lazy" width="720" height="450" decoding="async">
+          <figcaption><b>Things to do together</b> Built-in games and rated chess, for when you are hanging out rather than playing something else.</figcaption>
+        </figure>
+        <figure class="shot anim-in" data-full="assets/shots/settings.jpg" tabindex="0">
+          <img src="assets/shots/settings-thumb.jpg" alt="Make it yours — ElderKeep screenshot" loading="lazy" width="720" height="450" decoding="async">
+          <figcaption><b>Make it yours</b> Themes, colours, fonts, layout, hotkeys and audio — tuned per person, saved to disk.</figcaption>
+        </figure>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="section section-alt">
+  <div class="container">
+    <div class="section-head"><h2>Features</h2></div>
+    <div class="feat-grid">
+      <div class="feat-card anim-in">
+        <div class="feat-icon">🎤</div>
+        <h3>Voice Rooms</h3>
+        <p>Low-latency voice with push-to-talk or voice activity detection. Game audio auto-ducks while you're speaking. Mouse buttons supported for PTT.</p>
+      </div>
+      <div class="feat-card anim-in">
+        <div class="feat-icon">📺</div>
+        <h3>Screen Share</h3>
+        <p>Share your screen to everyone in your voice channel. Control bitrate, FPS, and resolution. System audio capture included.</p>
+      </div>
+      <div class="feat-card anim-in">
+        <div class="feat-icon">⚔️</div>
+        <h3>Your Own Channels</h3>
+        <p>Give the group its own space with as many rooms as you want, custom ranks, and a message of the day everyone sees when they log in.</p>
+      </div>
+      <div class="feat-card anim-in">
+        <div class="feat-icon">🎮</div>
+        <h3>Game Browser</h3>
+        <p>Find a server to join without leaving the app, across dozens of popular games plus Roblox. Save favourites and jump back into the ones you played last.</p>
+      </div>
+      <div class="feat-card anim-in">
+        <div class="feat-icon">🔐</div>
+        <h3>Encrypted Whispers</h3>
+        <p>Private messages are end-to-end encrypted with ECDH P-256 + AES-256-GCM. Only you and the recipient can read them.</p>
+      </div>
+      <div class="feat-card anim-in">
+        <div class="feat-icon">🖼️</div>
+        <h3>Rich Media Chat</h3>
+        <p>Images and videos from imgur, YouTube, Twitch, Reddit, and 10+ other hosts preview inline. Click to expand or open in a floating player.</p>
+      </div>
+      <div class="feat-card anim-in">
+        <div class="feat-icon">🎨</div>
+        <h3>Themes</h3>
+        <p>Seven colour themes, your own accent colour, chat colours, fonts and layout — set per person and saved to disk, not to someone else's account.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOAD -->
+<section id="download" class="section">
+  <div class="container" style="text-align:center">
+    <div class="section-head"><h2>Download</h2></div>
+    <p class="dl-sub">Free. Always.</p>
+    <div class="dl-grid">
+      <div class="dl-card anim-in">
+        <div class="dl-os-icon">🪟</div>
+        <h3>Windows</h3>
+        <p class="dl-req">Windows 10 / 11 &nbsp;—&nbsp; 64-bit</p>
+        <a href="https://github.com/CandyManKillerZ/elderkeep-client/releases/latest" class="btn btn-gold" target="_blank" rel="noopener">Download .exe</a>
+      </div>
+      <div class="dl-card anim-in">
+        <div class="dl-os-icon">🐧</div>
+        <h3>Linux</h3>
+        <p class="dl-req">AppImage (any distro) &nbsp;·&nbsp; .deb (Debian/Ubuntu)</p>
+        <a href="https://github.com/CandyManKillerZ/elderkeep-client/releases/latest" class="btn btn-gold" target="_blank" rel="noopener">Download for Linux</a>
+      </div>
+      <div class="dl-card dl-card-beta anim-in">
+        <div class="dl-beta-badge">BETA</div>
+        <div class="dl-os-icon">📱</div>
+        <h3>Android</h3>
+        <p class="dl-req">Direct APK &nbsp;·&nbsp; Android 8.0+</p>
+        <a href="https://github.com/CandyManKillerZ/elderkeep-android/releases/latest" class="btn btn-ghost-gold" target="_blank" rel="noopener">Download APK</a>
+        <p class="dl-beta-note">Early access — expect rough edges</p>
+      </div>
+    </div>
+    <div class="sysreq">
+      <h4 class="sysreq-title">System Requirements</h4>
+      <ul class="sysreq-list">
+        <li><span class="sysreq-lbl">OS</span> Windows 10/11 (64-bit) or Linux</li>
+        <li><span class="sysreq-lbl">Disk</span> ~100 MB</li>
+        <li><span class="sysreq-lbl">Network</span> Stable internet connection</li>
+        <li><span class="sysreq-lbl">Android</span> APK beta — Android 8.0 or higher</li>
+        <li><span class="sysreq-lbl">Optional</span> Microphone for voice chat</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CHANGELOG -->
+<section id="changelog" class="section section-alt">
+  <div class="container" style="text-align:center">
+    <div class="section-head"><h2>Changelog</h2></div>
+    <div id="changelog-list">
+      <p class="loading-txt">Loading patch notes…</p>
+    </div>
+    <a href="https://github.com/CandyManKillerZ/elderkeep-client/releases" class="btn btn-ghost" target="_blank" rel="noopener" style="margin-top:8px">All Releases on GitHub</a>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="section">
+  <div class="container">
+    <div class="section-head"><h2>FAQ</h2></div>
+    <div class="faq-list" id="faq-list"></div>
+  </div>
+</section>
+
+<!-- REVIEWS (removes itself when there is nothing approved to show) -->
+<section id="reviews" class="section">
+  <div class="container">
+    <div class="section-head"><h2>What People Say</h2></div>
+    <p class="screens-sub" id="reviews-sub">From people using ElderKeep.</p>
+    <div class="rv-grid" id="reviews-list"></div>
+    <p class="rv-foot">
+      Using ElderKeep? Type <code>/review 5 what you think</code> in the chat box to add yours.
+    </p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section section-alt">
+  <div class="container">
+    <div class="section-head"><h2>Get In Touch</h2></div>
+    <p class="contact-lead">
+      ElderKeep is made by one person. The quickest way to reach me is inside ElderKeep itself —
+      no ticket system, no support queue, just a message.
+    </p>
+    <div class="contact-steps">
+      <ol>
+        <li><b>Install ElderKeep</b> and make an account — it takes a minute, and there's no email to confirm.</li>
+        <li>Type <code>/j Clan CsB</code> into the chat box to drop into the clan channel.</li>
+        <li>Say hello. I'm <b class="contact-name">CMK</b> <span class="contact-alt">(CandyManKiller)</span>.</li>
+      </ol>
+    </div>
+    <p class="contact-foot">
+      Bugs, feature requests, "why does it do this?" — all welcome. Most of what's in ElderKeep
+      today started as somebody asking for it there.
+    </p>
+    <div class="contact-actions">
+      <a href="#download" class="btn btn-gold">Download Free</a>
+      <a href="https://github.com/CandyManKillerZ/elderkeep-client/issues" class="btn btn-ghost" target="_blank" rel="noopener">Or open an issue on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="footer-inner">
+    <img src="assets/icon_32.png" alt="" width="20" height="20">
+    <span>ElderKeep &mdash; a private space for your friend group</span>
+    <a href="https://github.com/CandyManKillerZ/elderkeep-client/releases" target="_blank" rel="noopener">Releases ↗</a>
+  </div>
+  <p class="footer-copy">&copy; 2026 ElderKeep. Built for small groups, not big platforms.</p>
+</footer>
+
+<!-- LIVE PREVIEW, FULL SIZE -->
+<div id="preview-lb" aria-hidden="true">
+  <button id="preview-lb-close" aria-label="Close">&#10005;</button>
+  <div id="preview-lb-inner"><!-- the iframe is MOVED here on open, never duplicated --></div>
+</div>
+
+<!-- SCREENSHOT LIGHTBOX -->
+<div id="shot-lb" aria-hidden="true">
+  <button id="shot-lb-close" aria-label="Close">✕</button>
+  <img id="shot-lb-img" alt="">
+</div>
+
+<script src="script.js?v=11"></script>
+</body>
+</html>

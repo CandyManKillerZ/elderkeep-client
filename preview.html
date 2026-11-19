@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>ElderKeep — Preview</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Share+Tech+Mono&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ui-font:       'Share Tech Mono',monospace;
+  --title-font:    'IM Fell English',serif;
+  --chat-size:     13px;
+  --ui-size:       12px;
+  --panel-size:    13px;
+  --bg-app:        #0e0e14;
+  --accent:        #c8a020;
+  --accent-bright: #f0d040;
+  --text-primary:  #d8d8e8;
+  --text-secondary:#808090;
+  --text-dim:      #505060;
+  --text-muted:    #303040;
+  --msg-normal:    #77ccff;
+  --msg-system:    #eecc11;
+  --msg-join:      #44ee88;
+  --msg-leave:     #ff9933;
+  --msg-channel:   #ffdd55;
+  --name-normal:   #ffffff;
+  --name-op:       #ffcc00;
+  --name-self:     #88ee44;
+  --panel-width:   220px;
+  --header-height: 64px;
+  --scroll-track:  #0c0c12;
+  --scroll-thumb:  #303042;
+  --border-mid:    #252530;
+  --tab-active-fg: #eecc11;
+  --tab-idle-fg:   #505060;
+  --btn-bg:        linear-gradient(180deg,#2e2e3c 0%,#1a1a26 100%);
+  --btn-border:    #4a4a5a;
+  --btn-fg:        #aaaabc;
+  --btn-hover:     #eecc11;
+}
+html,body{width:100%;height:100%;background:transparent;overflow:hidden;font-family:var(--ui-font);font-size:var(--ui-size);color:var(--text-primary);user-select:none}
+
+#app-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+#app{display:flex;width:100%;height:100vh;flex-direction:column;overflow:hidden;position:relative;background:transparent}
+#app>*{position:relative;z-index:1}
+
+/* HEADER */
+#header{flex-shrink:0;height:var(--header-height);background:transparent;border-bottom:1px solid rgba(200,160,32,0.35);display:flex;align-items:center;padding:0 14px;gap:10px;position:relative;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,0.7)}
+#header::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(200,140,20,0.6) 15%,rgba(240,200,60,0.9) 50%,rgba(200,140,20,0.6) 85%,transparent 100%)}
+.hdr-orn{flex-shrink:0;width:44px;height:44px;opacity:0.5}
+#hdr-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#hdr-title{font-family:var(--title-font);font-size:22px;color:var(--accent-bright);letter-spacing:4px;text-shadow:0 0 16px rgba(200,150,20,0.6),0 2px 4px rgba(0,0,0,1)}
+#hdr-sub{font-size:9px;color:var(--text-dim);letter-spacing:4px;text-transform:uppercase;margin-top:3px}
+#hdr-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.hdr-btn{height:24px;padding:0 10px;background:var(--btn-bg);border:1px solid var(--btn-border);color:var(--btn-fg);font-family:var(--ui-font);font-size:12px;letter-spacing:1px;cursor:pointer;text-transform:uppercase;transition:color 0.1s,border-color 0.1s}
+.hdr-btn:hover{color:var(--btn-hover);border-color:var(--accent)}
+#hdr-av{width:24px;height:24px;border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;background:rgba(200,160,32,0.15);color:var(--accent);border:1px solid rgba(200,160,32,0.3);flex-shrink:0;cursor:pointer}
+#hdr-user{font-size:var(--panel-size);color:var(--name-self);letter-spacing:1px;padding:0 8px;border-left:1px solid var(--border-mid)}
+
+/* CONTENT */
+#content{flex:1;min-height:0;display:flex;border-top:1px solid rgba(200,160,32,0.15)}
+
+/* CHAT */
+#chat-section{flex:1;min-width:0;display:flex;flex-direction:column;border-right:1px solid rgba(200,160,32,0.2);background:transparent}
+#channel-strip{flex-shrink:0;height:28px;background:transparent;border-bottom:1px solid rgba(200,160,32,0.18);display:flex;align-items:center;padding:0 12px;gap:8px}
+#cs-icon{color:var(--text-muted);font-size:9px}
+#cs-name{font-family:var(--title-font);font-size:var(--panel-size);color:var(--accent);letter-spacing:1px}
+#cs-sep{color:var(--border-mid)}
+#cs-topic{font-size:11px;color:var(--text-dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#cs-count{font-size:10px;color:#334455;white-space:nowrap}
+#chat-log{flex:1;min-height:0;overflow-y:auto;padding:6px 6px 6px 12px;background:transparent;scrollbar-width:thin;scrollbar-color:var(--scroll-thumb) var(--scroll-track);line-height:1.6}
+#chat-log::-webkit-scrollbar{width:7px}
+#chat-log::-webkit-scrollbar-track{background:var(--scroll-track)}
+#chat-log::-webkit-scrollbar-thumb{background:var(--scroll-thumb);border:1px solid #181826}
+.msg{display:flex;gap:5px;padding:1px 0;word-break:break-word;font-size:var(--chat-size)}
+.msg .ts{color:#20202e;font-size:10px;flex-shrink:0;padding-top:2px;min-width:42px}
+.msg .body{flex:1}
+.msg .uname{color:var(--name-normal)}
+.msg .uname.op{color:var(--name-op)}
+.msg .uname.me{color:var(--name-self)}
+.msg-chat   .body{color:var(--msg-normal)}
+.msg-system .body{color:var(--msg-system)}
+.msg-join   .body{color:var(--msg-join)}
+.msg-leave  .body{color:var(--msg-leave)}
+.msg-whisper .body{color:#cc88ff}
+.msg-sep{height:1px;background:#1e1e2c;margin:4px 0;width:100%}
+#input-row{flex-shrink:0;display:flex;align-items:center;border-top:1px solid rgba(200,160,32,0.2);background:transparent;padding:6px 8px;gap:0}
+#chat-input{flex:1;height:30px;background:rgba(8,8,18,0.9);border:1px solid rgba(180,140,30,0.3);border-right:none;color:var(--text-primary);font-family:var(--ui-font);font-size:var(--chat-size);padding:0 10px;outline:none;border-radius:3px 0 0 3px}
+#chat-input::placeholder{color:var(--text-muted)}
+#send-btn{height:30px;padding:0 18px;background:linear-gradient(180deg,rgba(60,50,20,0.9) 0%,rgba(30,24,8,0.95) 100%);border:1px solid rgba(180,140,30,0.5);color:var(--btn-fg);font-family:var(--ui-font);font-size:11px;letter-spacing:1px;cursor:pointer;border-radius:0 3px 3px 0}
+#send-btn:hover{color:var(--btn-hover)}
+#cmd-bar{flex-shrink:0;display:flex;gap:4px;flex-wrap:wrap;padding:5px 8px;border-top:1px solid rgba(200,160,32,0.1)}
+.qbtn{background:rgba(30,30,50,0.7);border:1px solid rgba(100,90,60,0.35);color:var(--text-dim);font-family:var(--ui-font);font-size:var(--panel-size);padding:2px 9px;cursor:pointer;letter-spacing:0.5px;border-radius:2px}
+.qbtn:hover{color:var(--accent-bright);border-color:rgba(200,160,30,0.5)}
+
+/* RIGHT PANEL */
+#rp-resize{width:4px;flex-shrink:0;background:rgba(200,160,32,0.2)}
+#right-panel{width:var(--panel-width);flex-shrink:0;display:flex;flex-direction:column;background:transparent}
+#tab-row{flex-shrink:0;display:flex;border-bottom:1px solid rgba(200,160,32,0.2)}
+.tab-btn{flex:1;padding:7px 4px;font-family:var(--ui-font);font-size:var(--panel-size);letter-spacing:0.5px;text-transform:uppercase;text-align:center;cursor:pointer;color:var(--tab-idle-fg);border-right:1px solid var(--border-mid)}
+.tab-btn:last-child{border-right:none}
+.tab-btn:hover{color:var(--text-secondary)}
+.tab-btn.active{color:var(--tab-active-fg);border-bottom:2px solid var(--accent-bright);margin-bottom:-2px}
+#panel-body{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+#ul-head{flex-shrink:0;padding:5px 8px;font-size:10px;color:#3a4a5a;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid #181820;display:flex;justify-content:space-between}
+#ul-head .cnt{color:var(--accent-bright)}
+#userlist{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--scroll-thumb) var(--scroll-track)}
+#userlist::-webkit-scrollbar{width:5px}
+#userlist::-webkit-scrollbar-track{background:var(--scroll-track)}
+#userlist::-webkit-scrollbar-thumb{background:var(--scroll-thumb)}
+.urow{display:flex;align-items:center;gap:5px;padding:2px 6px;font-size:var(--panel-size);cursor:pointer;white-space:nowrap;overflow:hidden}
+.urow:hover{background:rgba(255,255,255,0.06)}
+.urow-icon{width:28px;height:28px;flex-shrink:0;border:1px solid rgba(120,90,20,0.45);background:#0a0a12;display:flex;align-items:center;justify-content:center;font-size:11px;color:rgba(180,140,30,0.5)}
+.urow .uname{flex:1;overflow:hidden;text-overflow:ellipsis;color:var(--text-primary);font-size:var(--panel-size)}
+.urow.op .uname{color:#ffdd55}
+.urow.me .uname{color:var(--name-self)}
+.urow .u-clan{font-size:9px;color:rgba(200,160,30,0.55);flex-shrink:0}
+.urow .u-lv{font-size:9px;color:rgba(140,110,40,0.7);flex-shrink:0;min-width:18px;text-align:right}
+.b-mid{color:rgba(100,180,100,0.65)!important}
+.b-high{color:rgba(80,140,220,0.75)!important}
+.b-legend{color:rgba(230,160,20,0.9)!important}
+
+/* BOTTOM BAR */
+#bottom-bar{flex-shrink:0;height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;background:transparent;border-top:1px solid rgba(200,160,32,0.2)}
+.bb-left{display:flex;align-items:center;gap:7px}
+.bb-right{display:flex;align-items:center;gap:4px}
+.status-pill{font-size:10px;color:var(--text-dim);border:1px solid #181822;padding:1px 8px;letter-spacing:0.5px}
+.status-pill.connected{color:#33cc66;border-color:#1a2c1a}
+.bb-btn{height:20px;padding:0 9px;background:var(--btn-bg);border:1px solid var(--btn-border);color:var(--btn-fg);font-family:var(--ui-font);font-size:10px;cursor:pointer;letter-spacing:0.5px}
+.bb-btn:hover{color:var(--btn-hover)}
+
+/* BG */
+#bg-matte{position:fixed;inset:0;z-index:-1;background:url('assets/Castle.jpg') center/cover no-repeat}
+#bg-matte .overlay{position:absolute;inset:0;background:rgba(0,0,8,0.30)}
+</style>
+</head>
+<body>
+
+<div id="bg-matte"><div class="overlay"></div></div>
+<canvas id="app-canvas"></canvas>
+
+<div id="app">
+  <div id="header">
+    <svg class="hdr-orn" viewBox="0 0 44 44" fill="none">
+      <rect x="2" y="2" width="40" height="40" stroke="#c8a020" stroke-width="1.5" fill="none" opacity="0.5"/>
+      <rect x="6" y="6" width="32" height="32" stroke="#8a6010" stroke-width="1" fill="none" opacity="0.4"/>
+      <circle cx="22" cy="22" r="7" stroke="#c8a020" stroke-width="1.5" fill="none" opacity="0.5"/>
+      <circle cx="22" cy="22" r="2.5" fill="#e8c040" opacity="0.6"/>
+      <line x1="22" y1="15" x2="22" y2="9" stroke="#c8a020" stroke-width="1" opacity="0.5"/>
+      <line x1="29" y1="22" x2="35" y2="22" stroke="#c8a020" stroke-width="1" opacity="0.5"/>
+      <line x1="15" y1="22" x2="9" y2="22" stroke="#c8a020" stroke-width="1" opacity="0.5"/>
+      <line x1="22" y1="29" x2="22" y2="35" stroke="#c8a020" stroke-width="1" opacity="0.5"/>
+      <line x1="2" y1="2" x2="12" y2="12" stroke="#c8a020" stroke-width="1" opacity="0.4"/>
+      <line x1="42" y1="2" x2="32" y2="12" stroke="#c8a020" stroke-width="1" opacity="0.4"/>
+    </svg>
+    <div id="hdr-center">
+      <div id="hdr-title">ElderKeep</div>
+      <div id="hdr-sub">Battle Network — Community Hub</div>
+    </div>
+    <div id="hdr-right">
+      <div id="hdr-av">Z</div>
+      <div id="hdr-user">Zephyr</div>
+      <button class="hdr-btn">◉ Profile</button>
+      <button class="hdr-btn">🎮 Play Games</button>
+      <button class="hdr-btn">⚙ Settings</button>
+    </div>
+    <svg class="hdr-orn" viewBox="0 0 44 44" fill="none" style="transform:scaleX(-1)">
+      <rect x="2" y="2" width="40" height="40" stroke="#c8a020" stroke-width="1.5" fill="none" opacity="0.5"/>
+      <rect x="6" y="6" width="32" height="32" stroke="#8a6010" stroke-width="1" fill="none" opacity="0.4"/>
+      <circle cx="22" cy="22" r="7" stroke="#c8a020" stroke-width="1.5" fill="none" opacity="0.5"/>
+      <circle cx="22" cy="22" r="2.5" fill="#e8c040" opacity="0.6"/>
+      <line x1="22" y1="15" x2="22" y2="9" stroke="#c8a020" stroke-width="1" opacity="0.5"/>
+      <line x1="29" y1="22" x2="35" y2="22" stroke="#c8a020" stroke-width="1" opacity="0.5"/>
+      <line x1="15" y1="22" x2="9" y2="22" stroke="#c8a020" stroke-width="1" opacity="0.5"/>
+      <line x1="22" y1="29" x2="22" y2="35" stroke="#c8a020" stroke-width="1" opacity="0.5"/>
+      <line x1="2" y1="2" x2="12" y2="12" stroke="#c8a020" stroke-width="1" opacity="0.4"/>
+      <line x1="42" y1="2" x2="32" y2="12" stroke="#c8a020" stroke-width="1" opacity="0.4"/>
+    </svg>
+  </div>
+
+  <div id="content">
+    <div id="chat-section">
+      <div id="channel-strip">
+        <div id="cs-icon">◆</div>
+        <div id="cs-name">Town Square</div>
+        <div id="cs-sep">|</div>
+        <div id="cs-topic">Welcome — hang out, find friends, and start a clan</div>
+        <div id="cs-count">23 online</div>
+      </div>
+      <div id="chat-log">
+        <div class="msg msg-system"><span class="ts">19:42</span><span class="body">Joining channel: <b style="color:var(--msg-channel)">Town Square</b></span></div>
+        <div class="msg msg-system"><span class="ts">19:42</span><span class="body">Welcome to Town Square! Type <b>/help</b> to see available commands. Use <b>/clan create [name]</b> to start your own clan.</span></div>
+        <div class="msg-sep"></div>
+        <div class="msg msg-chat"><span class="ts">19:43</span><span class="body"><span class="uname op">Valdris</span>: anyone running Rust tonight?</span></div>
+        <div class="msg msg-chat"><span class="ts">19:43</span><span class="body"><span class="uname">Kestrel</span>: yeah hop in voice</span></div>
+        <div class="msg msg-join"><span class="ts">19:44</span><span class="body">Syntra has joined the channel.</span></div>
+        <div class="msg msg-chat"><span class="ts">19:44</span><span class="body"><span class="uname">Syntra</span>: sup guys</span></div>
+        <div class="msg msg-chat"><span class="ts">19:45</span><span class="body"><span class="uname me">Zephyr</span>: o/</span></div>
+        <div class="msg msg-chat"><span class="ts">19:45</span><span class="body"><span class="uname op">Valdris</span>: Zephyr join vc</span></div>
+        <div class="msg msg-leave"><span class="ts">19:46</span><span class="body">NovaShard has left the channel.</span></div>
+        <div class="msg msg-chat"><span class="ts">19:47</span><span class="body"><span class="uname">Kestrel</span>: anyone wanna do ranked cs later?</span></div>
+        <div class="msg msg-chat"><span class="ts">19:47</span><span class="body"><span class="uname">Rylix</span><span class="u-clan" style="color:rgba(200,160,30,0.7);font-size:11px"> [NOVA]</span>: im in</span></div>
+        <div class="msg msg-chat"><span class="ts">19:48</span><span class="body"><span class="uname me">Zephyr</span>: same, inv me when ready</span></div>
+        <div class="msg msg-join"><span class="ts">19:49</span><span class="body">Morwen has joined the channel.</span></div>
+        <div class="msg msg-chat"><span class="ts">19:49</span><span class="body"><span class="uname">Morwen</span>: is the server browser working for arma?</span></div>
+        <div class="msg msg-chat"><span class="ts">19:50</span><span class="body"><span class="uname op">Valdris</span>: yeah just switched to it, loads fine</span></div>
+      </div>
+      <div id="input-row">
+        <input id="chat-input" type="text" placeholder="Enter message or /command..." readonly/>
+        <button id="send-btn">SEND</button>
+      </div>
+      <div id="cmd-bar">
+        <button class="qbtn">Whisper</button>
+        <button class="qbtn">Friends</button>
+        <button class="qbtn">Emote</button>
+        <button class="qbtn">Whois</button>
+        <button class="qbtn">Away</button>
+        <button class="qbtn">Reply</button>
+        <button class="qbtn">Help</button>
+      </div>
+    </div>
+
+    <div id="rp-resize"></div>
+
+    <div id="right-panel">
+      <div id="tab-row">
+        <div class="tab-btn active">Channel</div>
+        <div class="tab-btn">Friends</div>
+        <div class="tab-btn">Clan</div>
+        <div class="tab-btn">Voice</div>
+      </div>
+      <div id="panel-body">
+        <div id="ul-head">Users <span class="cnt">23</span></div>
+        <div id="userlist">
+          <div class="urow me">
+            <div class="urow-icon">⚔</div>
+            <span class="u-lv b-mid">14</span>
+            <span class="uname">Zephyr</span>
+          </div>
+          <div class="urow op">
+            <div class="urow-icon">⚔</div>
+            <span class="u-lv b-legend">38</span>
+            <span class="uname">Valdris</span>
+            <span class="u-clan">[IRON]</span>
+          </div>
+          <div class="urow">
+            <div class="urow-icon">⚔</div>
+            <span class="u-lv b-high">22</span>
+            <span class="uname">Kestrel</span>
+            <span class="u-clan">[IRON]</span>
+          </div>
+          <div class="urow">
+            <div class="urow-icon">⚔</div>
+            <span class="u-lv b-high">29</span>
+            <span class="uname">Rylix</span>
+            <span class="u-clan">[NOVA]</span>
+          </div>
+          <div class="urow">
+            <div class="urow-icon">⚔</div>
+            <span class="u-lv">6</span>
+            <span class="uname">Syntra</span>
+          </div>
+          <div class="urow">
+            <div class="urow-icon">⚔</div>
+            <span class="u-lv b-mid">17</span>
+            <span class="uname">Morwen</span>
+            <span class="u-clan">[NOVA]</span>
+          </div>
+          <div class="urow">
+            <div class="urow-icon">⚔</div>
+            <span class="u-lv">3</span>
+            <span class="uname">Tarvik</span>
+          </div>
+          <div class="urow op">
+            <div class="urow-icon">⚔</div>
+            <span class="u-lv b-legend">51</span>
+            <span class="uname">Sylvara</span>
+            <span class="u-clan">[VEX]</span>
+          </div>
+          <div class="urow">
+            <div class="urow-icon">⚔</div>
+            <span class="u-lv b-mid">11</span>
+            <span class="uname">Droxen</span>
+          </div>
+          <div class="urow">
+            <div class="urow-icon">⚔</div>
+            <span class="u-lv">8</span>
+            <span class="uname">Phalix</span>
+            <span class="u-clan">[VEX]</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="bottom-bar">
+    <div class="bb-left">
+      <span class="status-pill connected">● Connected</span>
+    </div>
+    <div class="bb-right">
+      <button class="bb-btn">Away</button>
+      <button class="bb-btn">DnD</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const canvas = document.getElementById('app-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, vignette;
+  function resize(){
+    W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight;
+    // Built once per resize, not once per FRAME. Allocating a gradient object and filling
+    // the whole canvas with it 60x a second was a large share of this loop's cost.
+    vignette = ctx.createRadialGradient(W/2,H/2,H*0.2,W/2,H/2,H);
+    vignette.addColorStop(0,'rgba(0,0,0,0)'); vignette.addColorStop(1,'rgba(0,0,0,0.7)');
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  /* Rain is drawn in OPACITY BUCKETS: one path + one stroke() per bucket instead of a
+     beginPath/stroke per drop. 420 drops meant 420 separate path operations every frame,
+     in a panel a few hundred pixels wide. Count also scales to the canvas area now - the
+     old fixed 420 was sized for a 1920x1080 window, not this preview panel. */
+  const RAIN_BUCKETS = 5;
+  const rainCount = Math.max(90, Math.min(420, Math.round(W * H / 2600)));
+  const rain = [];
+  for(let i=0;i<rainCount;i++){
+    rain.push({ x:Math.random()*W, y:Math.random()*H, len:18+Math.random()*28, speed:22+Math.random()*20,
+                bucket:Math.floor(Math.random()*RAIN_BUCKETS), wind:1.2 });
+  }
+
+  function newMeteor(init){
+    return { x:Math.random()*W, y:init?Math.random()*H*0.4:-40, vx:2+Math.random()*3, vy:3+Math.random()*4, len:80+Math.random()*120, alpha:0.7+Math.random()*0.3, life:0, maxLife:60+Math.random()*80 };
+  }
+  const meteors = [];
+  for(let i=0;i<6;i++) meteors.push(newMeteor(true));
+
+  let lightning = null, lightningTimer = 2500+Math.random()*5000;
+  function createLightning(){
+    const segments=[]; let x=W*(0.15+Math.random()*0.7), y=-20;
+    while(y<H*0.75){
+      const nx=x+(Math.random()-0.5)*90, ny=y+35+Math.random()*60;
+      segments.push({x1:x,y1:y,x2:nx,y2:ny,fork:false});
+      if(Math.random()<0.35) segments.push({x1:x,y1:y,x2:x+(Math.random()-0.5)*120,y2:y+30+Math.random()*50,fork:true});
+      x=nx; y=ny;
+    }
+    return {segments,alpha:1};
+  }
+
+  let last=0;
+  function draw(ts){
+    const dt=Math.min(ts-last,50); last=ts;
+    ctx.clearRect(0,0,W,H);
+
+    for(let i=0;i<meteors.length;i++){
+      const m=meteors[i]; m.x+=m.vx*dt*0.05; m.y+=m.vy*dt*0.05; m.life++;
+      const t=m.life/m.maxLife, a=m.alpha*(1-t);
+      if(a>0.01){
+        const grd=ctx.createLinearGradient(m.x-m.vx*m.len*0.05,m.y-m.vy*m.len*0.05,m.x,m.y);
+        grd.addColorStop(0,'rgba(255,255,255,0)'); grd.addColorStop(1,`rgba(255,240,200,${a})`);
+        ctx.strokeStyle=grd; ctx.lineWidth=2; ctx.beginPath();
+        ctx.moveTo(m.x-m.vx*m.len*0.05,m.y-m.vy*m.len*0.05); ctx.lineTo(m.x,m.y); ctx.stroke();
+        ctx.beginPath(); ctx.arc(m.x,m.y,2.5,0,Math.PI*2); ctx.fillStyle=`rgba(255,240,180,${a*0.8})`; ctx.fill();
+      }
+      if(m.life>=m.maxLife||m.x>W+50||m.y>H+50) meteors[i]=newMeteor(false);
+    }
+
+    lightningTimer-=dt;
+    if(lightningTimer<=0){ lightning=createLightning(); lightningTimer=2500+Math.random()*5000; }
+    if(lightning){ lightning.alpha-=dt*0.002; if(lightning.alpha<=0) lightning=null; }
+    if(lightning){
+      ctx.fillStyle=`rgba(180,210,255,${lightning.alpha*0.08})`; ctx.fillRect(0,0,W,H);
+      // Glow without shadowBlur: one wide soft pass, then the bright core on top.
+      ctx.save(); ctx.lineCap='round';
+      for(const pass of [{w:7,a:0.16},{w:1,a:1}]){
+        ctx.beginPath();
+        for(const seg of lightning.segments){ if(seg.fork && pass.w>1) continue;
+          ctx.moveTo(seg.x1,seg.y1); ctx.lineTo(seg.x2,seg.y2); }
+        ctx.strokeStyle=`rgba(210,230,255,${(lightning.alpha*pass.a).toFixed(3)})`;
+        ctx.lineWidth=pass.w===1?2.5:pass.w; ctx.stroke();
+      }
+      ctx.beginPath();
+      for(const seg of lightning.segments){ if(!seg.fork) continue;
+        ctx.moveTo(seg.x1,seg.y1); ctx.lineTo(seg.x2,seg.y2); }
+      ctx.strokeStyle=`rgba(180,210,255,${(lightning.alpha*0.45).toFixed(3)})`;
+      ctx.lineWidth=1; ctx.stroke();
+      ctx.restore();
+    }
+
+    for(const r of rain){
+      r.y+=r.speed*dt*0.06; r.x+=r.wind*dt*0.06;
+      if(r.y>H+50){ r.y=-50; r.x=Math.random()*W; }
+    }
+    ctx.save();
+    ctx.lineWidth=1;
+    for(let b=0;b<RAIN_BUCKETS;b++){
+      ctx.strokeStyle=`rgba(180,210,255,${(0.06+(b+0.5)*(0.18/RAIN_BUCKETS)).toFixed(3)})`;
+      ctx.beginPath();
+      for(const r of rain){
+        if(r.bucket!==b) continue;
+        ctx.moveTo(r.x,r.y); ctx.lineTo(r.x+r.wind*r.len*0.3,r.y+r.len);
+      }
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    ctx.fillStyle=vignette; ctx.fillRect(0,0,W,H);
+
+    if (running) rafId = requestAnimationFrame(draw);
+    else rafId = 0;
+  }
+
+  /* Do not animate what nobody is looking at.
+     This canvas used to run forever, including while the visitor was reading the FAQ
+     a full screen below it - it was a standing CPU cost for the whole visit, and part
+     of the scroll jank reported on 2026-11-19. The parent page watches this iframe with
+     an IntersectionObserver and tells us; we also stop when the tab is backgrounded.
+     Default is ON so the animation still runs if the message never arrives. */
+  let running = true, rafId = 0;
+  // Mirrored onto <html data-ek-running> so the state is observable from the parent
+  // page and from devtools - otherwise "is it actually paused?" is unanswerable
+  // without frame-timing, which a background tab throttles anyway.
+  const mark = () => document.documentElement.dataset.ekRunning = running ? '1' : '0';
+  function start(){ if (!running || rafId) return; last = performance.now(); rafId = requestAnimationFrame(draw); }
+  function setRunning(on){
+    on = !!on && !document.hidden;
+    if (on === running) { if (on) start(); return; }
+    running = on; mark();
+    if (on) start();
+    else if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+  }
+  mark();
+  let wantedByParent = true;
+  window.addEventListener('message', e => {
+    if (e.source !== window.parent || !e.data || e.data.t !== 'ek-preview-visible') return;
+    wantedByParent = !!e.data.on;
+    setRunning(wantedByParent);
+  });
+  document.addEventListener('visibilitychange', () => setRunning(wantedByParent));
+  // Tell the parent we are listening. Without this the parent's first visibility
+  // message can be sent before this handler exists - and if the iframe's load event
+  // has already fired by then, nothing ever re-sends it and we animate forever.
+  try { if (window.parent !== window) window.parent.postMessage({ t: 'ek-preview-ready' }, '*'); } catch (_) {}
+  rafId = requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>
