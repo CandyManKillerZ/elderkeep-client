@@ -134,8 +134,11 @@ Windows 10/11, Linux (x64) and Android.
 ## A note on servers
 
 ElderKeep runs on one server, and everyone using this client is on it. **Self-hosting is not
-currently available** — the server software isn't public. If that's something you want, say so
-in an issue; what gets built next is driven by what people ask for.
+available yet** — the server software isn't public.
+
+> `MAYBE LATER` — Self-hosting is on the table. If enough people ask for it, the server will be
+> made available to run yourself. No promise and no date, but it is the kind of thing that gets
+> built when people keep asking. Open an issue if you want it.
 
 ## License
 
