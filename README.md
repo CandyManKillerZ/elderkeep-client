@@ -24,12 +24,14 @@ features get added when the people using it ask for them.
 
 <div align="center">
 
-|                                                            |                                                              |
-|:----------------------------------------------------------:|:------------------------------------------------------------:|
-| ![Chat](docs/screenshots/chat.jpg)                          | ![Voice](docs/screenshots/voice-settings.jpg)                 |
-| **Chat** — channels, live member list, friends and clans    | **Voice** — devices, noise suppression, echo cancellation     |
-| ![Screen share](docs/screenshots/screenshare-settings.jpg)  | ![Play Games](docs/screenshots/play-games.jpg)                |
-| **Screen share** — resolution, frame rate, system audio     | **Play Games** — find a server without leaving the app        |
+| | |
+|:---:|:---:|
+| [![Chat](docs/screenshots/chat.jpg)](docs/screenshots/chat.jpg) | [![Voice rooms](docs/screenshots/voice.jpg)](docs/screenshots/voice.jpg) |
+| **Chat** — channels, clans, and a live member list | **Voice** — rooms you drop in and out of, with who's sharing a screen |
+| [![Screen share](docs/screenshots/screenshare-settings.jpg)](docs/screenshots/screenshare-settings.jpg) | [![Play Games](docs/screenshots/play-games.jpg)](docs/screenshots/play-games.jpg) |
+| **Screen share** — resolution, frame rate, bitrate, system audio | **Play Games** — find a server without leaving the app |
+| [![Arcade](docs/screenshots/arcade.jpg)](docs/screenshots/arcade.jpg) | [![Settings](docs/screenshots/settings.jpg)](docs/screenshots/settings.jpg) |
+| **Arcade** — built-in games, leaderboards, and rated chess | **Settings** — themes, colours, fonts and layout |
 
 </div>
 
