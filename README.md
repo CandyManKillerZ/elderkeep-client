@@ -142,6 +142,22 @@ available yet** — the server software isn't public.
 > made available to run yourself. No promise and no date, but it is the kind of thing that gets
 > built when people keep asking. Open an issue if you want it.
 
+## Get in touch
+
+ElderKeep is made by one person. The quickest way to reach me is inside ElderKeep itself —
+no ticket system, no support queue, just a message.
+
+1. **Install ElderKeep** and make an account — it takes a minute, and there's no email to confirm.
+2. Type **`/j Clan CsB`** into the chat box to drop into the clan channel.
+3. Say hello. I'm **CMK** (CandyManKiller).
+
+Bugs, feature requests, "why does it do this?" — all welcome. Most of what's in ElderKeep today
+started as somebody asking for it there. If you'd rather not install anything first, there's an
+[issue tracker](https://github.com/CandyManKillerZ/elderkeep-client/issues).
+
+Using ElderKeep already? Type `/review 5 what you think` in the chat box to leave a review for
+the [website](https://candymankillerz.github.io/elderkeep-client/).
+
 ## License
 
 ElderKeep is **proprietary software** — © 2026 Mark van der Sluis. All rights reserved.
