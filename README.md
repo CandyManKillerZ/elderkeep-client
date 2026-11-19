@@ -2,15 +2,19 @@
 
 # ElderKeep
 
-**A Warcraft III RoC-style chat client for friends, voice, and games.**
+**A private space for your friend group.**
 
-ElderKeep is a desktop group-chat app with built-in voice rooms, screen sharing, and a unified
-game browser — wrapped in the classic Warcraft III Reign of Chaos / Battle.net look and feel.
-Download it and you're dropped straight onto the **public ElderKeep server** — free, always
-online, open to anyone, no invite required. Chat, voice call, and screen-share with friends,
-or start your own clan.
+Voice rooms, screen sharing and chat for one group of people who actually know each other —
+not a platform, not a social network, not a server full of strangers. Install it, make an
+account, and you're in the same place as everyone else you know.
 
+Free. No ads, no subscriptions, no tracking.
+
+[**🌐 Website**](https://candymankillerz.github.io/elderkeep-client/) &nbsp;·&nbsp;
 [**⬇ Download the latest release**](https://github.com/CandyManKillerZ/elderkeep-client/releases/latest)
+
+`IN DEVELOPMENT` — stable enough to use every day, but still being built. Things change, and
+features get added when the people using it ask for them.
 
 </div>
 
@@ -20,12 +24,12 @@ or start your own clan.
 
 <div align="center">
 
-|                                                                                            |                                                                                                |
-|:------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------:|
-| ![Chat](docs/screenshots/chat.jpg)                                                          | ![Play Games](docs/screenshots/play-games.jpg)                                                 |
-| Chat — channels, live user list, voice/friends/clan tabs                                    | Play Games — browse and join servers for 30+ PC games, Roblox, and Warcraft III                |
-| ![Voice settings](docs/screenshots/voice-settings.jpg)                                       | ![Screen share settings](docs/screenshots/screenshare-settings.jpg)                             |
-| Voice — device selection, noise suppression, echo cancellation                              | Screen Share — resolution, frame rate, bitrate budget, system audio                             |
+|                                                            |                                                              |
+|:----------------------------------------------------------:|:------------------------------------------------------------:|
+| ![Chat](docs/screenshots/chat.jpg)                          | ![Voice](docs/screenshots/voice-settings.jpg)                 |
+| **Chat** — channels, live member list, friends and clans    | **Voice** — devices, noise suppression, echo cancellation     |
+| ![Screen share](docs/screenshots/screenshare-settings.jpg)  | ![Play Games](docs/screenshots/play-games.jpg)                |
+| **Screen share** — resolution, frame rate, system audio     | **Play Games** — find a server without leaving the app        |
 
 </div>
 
@@ -38,82 +42,100 @@ or start your own clan.
 
 ---
 
-## Download & Install
+## Who it's for
 
-Grab the latest build from the [**Releases**](https://github.com/CandyManKillerZ/elderkeep-client/releases/latest) page.
+A friend group, a guild, a few housemates, a small team — anyone who has outgrown a group chat
+and doesn't want to hand their conversations to an ad company. Everyone lands in the same place
+and can talk, share a screen, send files and mess about without any of it being a product.
+
+## Download & Install
 
 | Platform | File |
 |----------|------|
 | **Windows 10/11** | `ElderKeep-Setup-<version>.exe` (one-click installer) — or the portable `.zip` |
 | **Linux (x64)** | `ElderKeep-<version>-x64.AppImage` or the `.deb` package |
+| **Android** | [APK from the Android repo](https://github.com/CandyManKillerZ/elderkeep-android/releases/latest) |
 
-ElderKeep keeps itself current with a built-in **auto-updater**, so you only need to install once.
+Grab the latest build from the [**Releases**](https://github.com/CandyManKillerZ/elderkeep-client/releases/latest)
+page. ElderKeep keeps itself current with a built-in **auto-updater**, so you only install once.
 
-> **Windows SmartScreen / "nothing happens" on launch?** The installer isn't code-signed yet, so
-> Windows may flag it with *Mark of the Web*. Right-click the downloaded `.exe` → **Properties** →
-> tick **Unblock** → **OK**, then run it again.
+> **Windows SmartScreen, or "I ran the installer and nothing happened"?** The installer isn't
+> code-signed yet, so Windows flags it with *Mark of the Web*. Right-click the downloaded `.exe`
+> → **Properties** → tick **Unblock** → **OK**, then run it again.
 
-## Getting Started
+## Getting started
 
 1. Install and launch ElderKeep.
-2. New users **connect to the public server automatically** — no server address required.
-3. Create an account and **save your one-time recovery codes** (you'll need them if you ever forget your password).
+2. You connect to the ElderKeep server automatically — there's no address to type in.
+3. Create an account and **save your one-time recovery codes**. They are the only way back in
+   if you forget your password.
 4. Join a channel, add some friends, and you're in.
 
 ## Features
 
 ### 💬 Chat
-- Public channels and clan channels
-- **End-to-end encrypted** private whispers (ECDH + AES-256-GCM)
-- Emoji picker, Tenor GIFs, inline images, and rich link previews with a lightbox
+- Public channels, clan channels and clan sub-channels
+- **End-to-end encrypted** whispers (ECDH P-256 + AES-256-GCM) — the server can't read them
+- Replies, reactions, and `@mentions` with `@everyone` / `@here`
+- Emoji and GIF pickers, inline images with a zoomable pop-out viewer
+- Inline video — YouTube, Twitch, Vimeo and Streamable play in the chat window
 - `/me` emotes and IRC-style moderation commands (kick, ban, op, whois, who, …)
-- Daily chat logs kept locally
+- Daily chat logs kept locally on your own machine
 
 ### 🎙️ Voice
 - Low-latency peer-to-peer voice rooms
-- **Push-to-talk** or voice-activation, with mute & deafen
+- **Push-to-talk** or voice activation, with mute and deafen
 - **RNNoise** background-noise suppression
-- Automatic **game-audio ducking** while you talk
+- **Game-audio ducking** — your game drops in volume while someone talks
 - Microphone test and full mic/speaker device selection
-- Host-controlled calls — invite, add, remove, force-mute, and end for everyone
+- Host-controlled calls — invite, add, remove, force-mute, end for everyone
 
-### 🖥️ Screen Sharing
-- Share a full screen or a single window, with **system audio**
-- Adjustable resolution, FPS, and bitrate, with an auto-FPS guard
-- Native viewer window with per-viewer volume, fullscreen, and auto-reconnect
-- Smart bandwidth budgeting across multiple viewers
+### 🖥️ Screen sharing
+- Share a whole screen or a single window, **with system audio**
+- Adjustable resolution, frame rate and bitrate, with an auto-FPS guard
+- A real viewer window — per-viewer volume, fullscreen, auto-reconnect
+- See who's watching, and bandwidth budgeting across several viewers
 
-### 👥 Friends & Clans
-- Friends list with favorites and live online/offline status
-- See what game friends are playing on **Steam**
-- Clans with ranks, message-of-the-day, invites, and chat history
+### 📁 File transfer
+- Send a file straight to someone, **peer to peer** — it never touches a server and is never
+  written to disk anywhere but the recipient's machine
+- Drag and drop onto a name, with a transfers panel, progress and cancel
+
+### 👥 Friends & clans
+- Friends list with favourites and live online/offline status
+- See what your friends are playing on **Steam**, and jump into their game
+- Clans with ranks, a message of the day, invites and shared history
 
 ### 🎮 Play Games
-A unified game browser built right into chat:
-- **PC game servers** — browse, filter, and join via BattleMetrics + the Steam Web API
-- **Roblox** — game and server browser, friends lookup, and one-click join
-- **Warcraft III** — LAN lobby browser, plus games hosted straight from chat via the w3bot
+Find somewhere to play without leaving chat — browse and join servers across dozens of PC
+games via the Steam Web API, plus a Roblox game and server browser with one-click join.
+Favourites and recently-played are shared across all of it.
 
-### 🔒 Accounts & Security
-- One-time backup **recovery codes** and self-service password reset
-- Optional **saved password**, encrypted with your OS credential vault (Windows DPAPI) — never stored in plain text
-- **Auto-connect** on launch, once the update check confirms you're on the latest build
+### 🕹️ Arcade
+Built-in games with server-verified leaderboards, XP and badges — Arkanoid, Snake, Tetris,
+Pac-Keep — plus **rated player-vs-player chess** with full move validation on the server.
+
+### 🔒 Accounts & security
+- One-time **recovery codes** and self-service password reset
+- Optional saved password, encrypted with your OS credential vault (Windows DPAPI) — never
+  stored in plain text
+- Auto-connect on launch, once the update check confirms you're on the latest build
 
 ### 🎨 Polish
-- Themes, accent colors, and custom backgrounds (with an animated battlefield canvas)
-- Profiles with icons, plus XP and level badges
-- Floating chat-bubble overlay and system-tray support
-- Live in-app patch notes
+- Themes, accent colours, chat colours, fonts and layout options
+- Animated backgrounds, profile icons, XP and level badges
+- Floating chat-bubble overlay, system tray, and nine rebindable global hotkeys
+- Patch notes in the app, so you can see what changed
 
 ## Platforms
 
-Windows 10/11 and Linux (x64). A mobile/web build is also available via Capacitor.
+Windows 10/11, Linux (x64) and Android.
 
-## Self-Hosting
+## A note on servers
 
-**Self-hosting is not currently available.** The ElderKeep server software is not public —
-ElderKeep only connects to the official public server. Everyone downloading this client joins
-the same community.
+ElderKeep runs on one server, and everyone using this client is on it. **Self-hosting is not
+currently available** — the server software isn't public. If that's something you want, say so
+in an issue; what gets built next is driven by what people ask for.
 
 ## License
 
